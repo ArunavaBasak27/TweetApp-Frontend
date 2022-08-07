@@ -1,0 +1,37 @@
+import { Form, Formik } from "formik";
+import { observer } from "mobx-react-lite";
+import { Button, Header } from "semantic-ui-react";
+import MyTextInput from "../../app/common/form/MyTextInput";
+import { useStore } from "../../app/stores/store";
+
+const LoginForm = () => {
+	const { userStore } = useStore();
+	return (
+		<Formik
+			initialValues={{ username: "", password: "" }}
+			onSubmit={(values) => userStore.login(values)}
+		>
+			{({ handleSubmit, isSubmitting }) => (
+				<Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
+					<Header
+						as="h2"
+						content="Login to TweetApp"
+						color="teal"
+						textAlign="center"
+					/>
+					<MyTextInput name="username" placeholder="username" />
+					<MyTextInput name="password" type="password" placeholder="password" />
+					<Button
+						loading={isSubmitting}
+						positive
+						content="Login"
+						type="submit"
+						fluid
+					/>
+				</Form>
+			)}
+		</Formik>
+	);
+};
+
+export default observer(LoginForm);
