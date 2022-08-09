@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { Route } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import HomePage from "../../features/home/HomePage";
@@ -27,4 +28,4 @@ function App() {
 	);
 }
 
-export default App;
+export default observer(App);

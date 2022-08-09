@@ -9,6 +9,7 @@ class UserStore {
 	loading: boolean = false;
 	loadingInitial: boolean = false;
 	username?: string | null = window.localStorage.getItem("username");
+	
 	constructor() {
 		makeAutoObservable(this);
 	}

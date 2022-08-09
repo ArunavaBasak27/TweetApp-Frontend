@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { Response } from "../models/Response";
+import { Tweet } from "../models/Tweet";
 import { LoginUser, RegisterUser, User } from "../models/User";
 import { store } from "../stores/store";
 
@@ -42,8 +43,13 @@ const UserRequest = {
 		requests.post<Response<User>>("/register", creds),
 };
 
+const TweetRequest = {
+	list: () => requests.get<Response<Tweet[]>>("/all"),
+};
+
 const agent = {
 	UserRequest,
+	TweetRequest,
 };
 
 export default agent;
