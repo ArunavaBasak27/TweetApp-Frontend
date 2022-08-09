@@ -5,7 +5,7 @@ import { Tweet } from "../models/Tweet";
 
 class TweetStore {
 	tweets: Tweet[] = [];
-	tweetRegistry = new Map<number, Tweet>();
+	tweetRegistry = new Map<string, Tweet>();
 	selectedTweet: Tweet | null = null;
 	editMode = false;
 	loading = false;
@@ -17,7 +17,7 @@ class TweetStore {
 
 	get tweetsByDate() {
 		return Array.from(this.tweetRegistry.values()).sort((a, b) => {
-			return Date.parse(a.datePosted) - Date.parse(b.datePosted);
+			return Date.parse(b.datePosted) - Date.parse(a.datePosted);
 		});
 	}
 
@@ -38,8 +38,8 @@ class TweetStore {
 				if (response.isSuccess) {
 					const tweetList = response.result;
 					tweetList.forEach((tweet) => {
-						this.tweets.push(tweet);
-						//this.tweetRegistry.set(tweet.id, tweet);
+						//this.tweets.push(tweet);
+						this.tweetRegistry.set(tweet.id.toString(), tweet);
 					});
 					this.loadingInitial = false;
 				} else {
