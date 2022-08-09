@@ -6,15 +6,14 @@ import TweetListItem from "./TweetListItem";
 
 const TweetsList = () => {
 	const { tweetStore } = useStore();
-	const { tweetsByDate, groupedTweets } = tweetStore;
-	console.log(groupedTweets);
+	const { groupedTweets } = tweetStore;
 	return (
 		<>
 			{groupedTweets.map(([group, tweets]) => {
 				return (
 					<Fragment key={group}>
 						<Header sub color="teal">
-							{group.toLowerCase()}
+							{group}
 						</Header>
 						<Segment>
 							<Item.Group divided>

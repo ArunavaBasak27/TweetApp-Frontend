@@ -45,6 +45,8 @@ const UserRequest = {
 
 const TweetRequest = {
 	list: () => requests.get<Response<Tweet[]>>("/all"),
+	listTweetOfUser: (username: string) =>
+		requests.get<Response<Tweet[]>>(`/${username}`),
 };
 
 const agent = {

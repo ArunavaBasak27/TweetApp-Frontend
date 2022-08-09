@@ -13,7 +13,7 @@ const NavBar = () => {
 					TweetApp
 				</Menu.Item>
 				<Menu.Item name="Tweets" as={Link} to="/tweets" />
-				<Menu.Item name="All Users" />
+				<Menu.Item name="All Users" as={Link} to="/allusers" />
 				<Menu.Item position="right">
 					<Image src="/assets/user.png" avatar spaced="right" />
 					{window.localStorage.getItem("username") && (

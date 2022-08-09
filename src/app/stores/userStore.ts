@@ -7,9 +7,9 @@ class UserStore {
 	users: User[] = [];
 	user: User | null = null;
 	loading: boolean = false;
-	loadingInitial: boolean = false;
+	loadingInitial: boolean = true;
 	username?: string | null = window.localStorage.getItem("username");
-	
+
 	constructor() {
 		makeAutoObservable(this);
 	}
@@ -17,13 +17,17 @@ class UserStore {
 	loadUsers = async () => {
 		try {
 			const response = await agent.UserRequest.list();
-			response.result.forEach((user) => {
-				this.users.push(user);
+			runInAction(() => {
+				response.result.forEach((user) => {
+					this.users.push(user);
+				});
+				this.loadingInitial = false;
 			});
-			this.setLoadingInitial(false);
 		} catch (error) {
 			console.log(error);
-			this.setLoadingInitial(false);
+			runInAction(() => {
+				this.loadingInitial = false;
+			});
 		}
 	};
 
@@ -69,7 +73,6 @@ class UserStore {
 			if (response.isSuccess) {
 				runInAction(() => {
 					this.user = response.result;
-					console.log(response);
 				});
 				var cred: LoginUser = {
 					username: response.result.email,
