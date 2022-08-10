@@ -8,3 +8,8 @@ export interface Tweet {
 	user: User;
 	datePosted: string;
 }
+
+export interface CreateTweet {
+	subject: string;
+	tag?: string;
+}

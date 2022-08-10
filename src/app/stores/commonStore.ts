@@ -1,4 +1,5 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, reaction } from "mobx";
+import { User } from "../models/User";
 
 class CommonStore {
 	token: string | null = window.localStorage.getItem("jwt");
@@ -6,14 +7,23 @@ class CommonStore {
 
 	constructor() {
 		makeAutoObservable(this);
-		
+
+		reaction(
+			() => this.token,
+			(token) => {
+				if (token) {
+					window.localStorage.setItem("jwt", token);
+				} else {
+					window.localStorage.removeItem("jwt");
+				}
+			}
+		);
 	}
 
 	setToken = (token: string | null) => {
-		if (token) window.localStorage.setItem("jwt", token);
 		this.token = token;
 	};
-	
+
 	setAppLoaded = () => {
 		this.appLoaded = true;
 	};

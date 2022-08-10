@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { Link, NavLink } from "react-router-dom";
 import { Container, Icon, Menu, Image, Dropdown } from "semantic-ui-react";
 import { useStore } from "../stores/store";
@@ -12,17 +13,20 @@ const NavBar = () => {
 					<Icon name="twitter" style={{ marginRight: "10px" }} size="huge" />
 					TweetApp
 				</Menu.Item>
-				<Menu.Item name="Tweets" as={Link} to="/tweets" />
-				<Menu.Item name="All Users" as={Link} to="/allusers" />
+				<Menu.Item name="Tweets" as={NavLink} to="/tweets" />
+				<Menu.Item name="All Users" as={NavLink} to="/allusers" />
+				<Menu.Item name="Post Tweet" as={NavLink} to="/post-tweet" />
 				<Menu.Item position="right">
 					<Image src="/assets/user.png" avatar spaced="right" />
-					{window.localStorage.getItem("username") && (
-						<Dropdown
-							pointing="top left"
-							text={window.localStorage.getItem("username") || " "}
-						>
+					{user && (
+						<Dropdown pointing="top left" text={user.email}>
 							<Dropdown.Menu>
-								<Dropdown.Item text="My Profile" icon="user" />
+								<Dropdown.Item
+									text="My Profile"
+									as={Link}
+									to="/my-profile"
+									icon="user"
+								/>
 								<Dropdown.Item onClick={logout} text="logout" icon="power" />
 							</Dropdown.Menu>
 						</Dropdown>
@@ -33,4 +37,4 @@ const NavBar = () => {
 	);
 };
 
-export default NavBar;
+export default observer(NavBar);

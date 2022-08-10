@@ -9,8 +9,8 @@ const UsersDashboard = () => {
 	const { userStore } = useStore();
 	const { loadUsers, users } = userStore;
 	useEffect(() => {
-		if (users.length <= 3) loadUsers();
-	}, [userStore]);
+		if (users.length <= 1) loadUsers();
+	}, [loadUsers, users.length]);
 	if (userStore.loadingInitial)
 		return <LoadingComponent content="Loading users" />;
 	return (

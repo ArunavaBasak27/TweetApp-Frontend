@@ -40,3 +40,12 @@ body {
 }
 
 /*end home page styles*/
+
+.large.text {
+  font-size: 52px !important
+}
+
+
+.medium.text {
+  font-size: 22px !important
+}

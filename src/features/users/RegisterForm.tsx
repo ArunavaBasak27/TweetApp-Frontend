@@ -3,11 +3,26 @@ import { observer } from "mobx-react-lite";
 import { Button, Header } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/stores/store";
-
+import * as Yup from "yup";
 const RegisterForm = () => {
 	const { userStore } = useStore();
+	const phoneRegExp = /^\d{10}$/;
+
+	const validationSchema = Yup.object({
+		firstName: Yup.string().required("This is a required field"),
+		lastName: Yup.string().required("This is a required field"),
+		email: Yup.string().email().required("This is a required field"),
+		password: Yup.string().required("This is a required field"),
+		confirmPassword: Yup.string().required("This is a required field"),
+		contactNumber: Yup.string().matches(
+			phoneRegExp,
+			"Phone number is not valid"
+		),
+	});
+
 	return (
 		<Formik
+			validationSchema={validationSchema}
 			initialValues={{
 				firstName: "",
 				lastName: "",

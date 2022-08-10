@@ -8,7 +8,6 @@ class UserStore {
 	user: User | null = null;
 	loading: boolean = false;
 	loadingInitial: boolean = true;
-	username?: string | null = window.localStorage.getItem("username");
 
 	constructor() {
 		makeAutoObservable(this);
@@ -36,7 +35,7 @@ class UserStore {
 	};
 
 	get isLoggedIn() {
-		return !!this.username;
+		return !!this.user;
 	}
 
 	login = async (credentials: LoginUser) => {
@@ -46,7 +45,7 @@ class UserStore {
 				store.commonStore.setToken(response.token!);
 				runInAction(() => {
 					this.user = response.result;
-					window.localStorage.setItem("username", this.user.email);
+					console.log(this.user);
 				});
 				history.push("/tweets");
 				store.modalStore.closeModal();
@@ -58,12 +57,21 @@ class UserStore {
 		}
 	};
 
+	getUser = async () => {
+		try {
+			const response = await agent.UserRequest.current();
+			if (response.isSuccess) {
+				runInAction(() => (this.user = response.result));
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	logout = () => {
 		store.commonStore.setToken(null);
 		window.localStorage.removeItem("jwt");
-		window.localStorage.removeItem("username");
 		this.user = null;
-		this.username = null;
 		history.push("/");
 	};
 

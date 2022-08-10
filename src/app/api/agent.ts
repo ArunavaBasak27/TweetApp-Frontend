@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { Response } from "../models/Response";
-import { Tweet } from "../models/Tweet";
+import { CreateTweet, Tweet } from "../models/Tweet";
 import { LoginUser, RegisterUser, User } from "../models/User";
 import { store } from "../stores/store";
 
@@ -41,12 +41,17 @@ const UserRequest = {
 	login: (creds: LoginUser) => requests.post<Response<User>>("/login", creds),
 	register: (creds: RegisterUser) =>
 		requests.post<Response<User>>("/register", creds),
+	search: (username: string) =>
+		requests.get<Response<User[]>>(`/search/${username}`),
+	current: () => requests.get<Response<User>>("/currentuser"),
 };
 
 const TweetRequest = {
 	list: () => requests.get<Response<Tweet[]>>("/all"),
 	listTweetOfUser: (username: string) =>
 		requests.get<Response<Tweet[]>>(`/${username}`),
+	createTweet: (tweetObj: CreateTweet, username:string) =>
+		requests.post<Response<Tweet>>(`/${username}/add`, tweetObj),
 };
 
 const agent = {

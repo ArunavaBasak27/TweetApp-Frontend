@@ -6,7 +6,8 @@ import LoginForm from "../users/LoginForm";
 import RegisterForm from "../users/RegisterForm";
 
 const HomePage = () => {
-	const { modalStore } = useStore();
+	const { modalStore, userStore } = useStore();
+	console.log(userStore.isLoggedIn);
 	return (
 		<Segment inverted textAlign="center" vertical className="masthead">
 			<Container text>
@@ -14,7 +15,7 @@ const HomePage = () => {
 					<Icon name="twitter" size="massive" style={{ marginBottom: 12 }} />
 					TweetApp
 				</Header>
-				{window.localStorage.getItem("jwt") ? (
+				{userStore.isLoggedIn ? (
 					<>
 						<Header as="h2" inverted content="Welcome to TweetApp" />
 						<Button as={Link} to="/tweets" size="huge" inverted>

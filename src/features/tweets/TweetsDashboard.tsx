@@ -8,12 +8,11 @@ import TweetsList from "./TweetsList";
 const TweetsDashboard = () => {
 	const { tweetStore } = useStore();
 	useEffect(() => {
-		if (tweetStore.tweets.length == 0) tweetStore.loadAllTweets();
+		if (tweetStore.tweetRegistry.size == 0) tweetStore.loadAllTweets();
 	}, [tweetStore]);
 
 	if (tweetStore.loadingInitial)
 		return <LoadingComponent content="Loading tweets" />;
-	// else
 	return (
 		<Grid>
 			<Grid.Column width="10">

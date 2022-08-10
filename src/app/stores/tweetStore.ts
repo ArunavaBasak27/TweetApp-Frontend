@@ -1,7 +1,8 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { history } from "../..";
 import agent from "../api/agent";
-import { Tweet } from "../models/Tweet";
+import { CreateTweet, Tweet } from "../models/Tweet";
+import { store } from "./store";
 
 class TweetStore {
 	tweets: Tweet[] = [];
@@ -31,6 +32,14 @@ class TweetStore {
 		);
 	}
 
+	get currentUserTweets() {
+		return Array.from(this.tweetRegistry.values())
+			.sort((a, b) => {
+				return Date.parse(b.datePosted) - Date.parse(a.datePosted);
+			})
+			.filter((x) => x.user.email === store.userStore.user?.email);
+	}
+
 	loadAllTweets = async () => {
 		try {
 			const response = await agent.TweetRequest.list();
@@ -49,6 +58,17 @@ class TweetStore {
 			});
 		} catch (error) {
 			console.log("error");
+		}
+	};
+
+	createTweet = async (username: string, tweetObj: CreateTweet) => {
+		try {
+			const response = await agent.TweetRequest.createTweet(tweetObj, username);
+			if (response.isSuccess) {
+				history.push("/my-profile");
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 }
