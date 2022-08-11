@@ -14,10 +14,9 @@ const RegisterForm = () => {
 		email: Yup.string().email().required("This is a required field"),
 		password: Yup.string().required("This is a required field"),
 		confirmPassword: Yup.string().required("This is a required field"),
-		contactNumber: Yup.string().matches(
-			phoneRegExp,
-			"Phone number is not valid"
-		),
+		contactNumber: Yup.string()
+			.matches(phoneRegExp, "Phone number is not valid")
+			.required("This is a required field"),
 	});
 
 	return (

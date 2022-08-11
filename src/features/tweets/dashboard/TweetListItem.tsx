@@ -1,5 +1,6 @@
-import { Icon, Item, Segment } from "semantic-ui-react";
-import { Tweet } from "../../app/models/Tweet";
+import { Link } from "react-router-dom";
+import { Button, Icon, Item, Segment } from "semantic-ui-react";
+import { Tweet } from "../../../app/models/Tweet";
 
 interface Props {
 	tweet: Tweet;
@@ -35,8 +36,15 @@ const TweetListItem = ({ tweet }: Props) => {
 						(5)
 					</span>
 				</Segment>
-				<Segment>
+				<Segment clearing>
 					<span>{tweet.subject}</span>
+					<Button
+						floated="right"
+						as={Link}
+						to={`/details/${tweet.id}`}
+						content="Details"
+						color="blue"
+					/>
 				</Segment>
 			</Segment.Group>
 		</>

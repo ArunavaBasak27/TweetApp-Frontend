@@ -7,7 +7,7 @@ import { store } from "./store";
 class TweetStore {
 	tweets: Tweet[] = [];
 	tweetRegistry = new Map<string, Tweet>();
-	selectedTweet: Tweet | null = null;
+	selectedTweet: Tweet | undefined = undefined;
 	editMode = false;
 	loading = false;
 	loadingInitial = true;
@@ -70,6 +70,51 @@ class TweetStore {
 		} catch (error) {
 			console.log(error);
 		}
+	};
+
+	selectTweet = async (id: number) => {
+		let tweet: Tweet | undefined = this.getATweet(id);
+		if (tweet) {
+			this.selectedTweet = tweet;
+		} else {
+			this.loadingInitial = true;
+			try {
+				var response = await agent.TweetRequest.details(id);
+				runInAction(() => {
+					if (response.isSuccess) {
+						tweet = response.result;
+						this.loadingInitial = false;
+						this.selectedTweet = tweet;
+					}
+					console.log(tweet);
+				});
+			} catch (error) {
+				console.log(error);
+				runInAction(() => {
+					this.loadingInitial = false;
+				});
+			}
+		}
+	};
+
+	deleteTweet = async (username: string, id: number) => {
+		this.loading = true;
+		try {
+			var response = await agent.TweetRequest.delete(username, id);
+			runInAction(() => {
+				this.tweetRegistry.delete(id.toString());
+				this.loading = false;
+			});
+		} catch (error) {
+			runInAction(() => {
+				console.log(error);
+				this.loading = false;
+			});
+		}
+	};
+
+	private getATweet = (id: number) => {
+		return this.tweetRegistry.get(id.toString());
 	};
 }
 export default TweetStore;

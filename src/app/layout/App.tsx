@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import HomePage from "../../features/home/HomePage";
-import TweetsDashboard from "../../features/tweets/TweetsDashboard";
+import TweetDetails from "../../features/tweets/details/TweetDetails";
+import TweetsDashboard from "../../features/tweets/dashboard/TweetsDashboard";
 import UsersDashboard from "../../features/users/list/UsersDashboard";
 import LoginForm from "../../features/users/LoginForm";
 import PostMyTweet from "../../features/users/profile/PostMyTweet";
@@ -39,6 +40,7 @@ function App() {
 						<Container style={{ marginTop: "7em" }}>
 							<Route exact path="/login" component={LoginForm} />
 							<Route exact path="/tweets" component={TweetsDashboard} />
+							<Route path="/details/:id" component={TweetDetails} />
 							<Route exact path="/allUsers" component={UsersDashboard} />
 							<Route exact path="/my-profile" component={ProfileDashboard} />
 							<Route exact path="/post-tweet" component={PostMyTweet} />

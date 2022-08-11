@@ -1,10 +1,18 @@
 import { observer } from "mobx-react-lite";
-import { Fragment } from "react";
-import { Button, Header, Item, Segment } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Button, Header, Icon, Item, Segment } from "semantic-ui-react";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 const MyTweetsList = () => {
 	const { tweetStore } = useStore();
-	const { currentUserTweets } = tweetStore;
+	const { currentUserTweets, deleteTweet, loading } = tweetStore;
+
+	const handleDelete = (username: string, id: number) => {
+		deleteTweet(username, id);
+	};
+
+	if (loading) return <LoadingComponent />;
+
 	return (
 		<>
 			<Segment style={{ marginTop: "3em" }}>
@@ -18,7 +26,13 @@ const MyTweetsList = () => {
 									<Item.Header># {tweet?.tag}</Item.Header>
 									<Item.Description> {tweet?.subject}</Item.Description>
 									<Item.Extra>
-										<Button floated="right" content="View" color="blue" />
+										<Button floated="right" content="Edit" color="blue" />
+										<Button
+											floated="right"
+											onClick={() => handleDelete(tweet.user.email, tweet.id)}
+											color="red"
+											content="Delete"
+										/>
 									</Item.Extra>
 								</Item.Content>
 							</Item>

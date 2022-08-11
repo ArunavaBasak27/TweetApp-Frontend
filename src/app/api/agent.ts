@@ -34,6 +34,7 @@ const requests = {
 	get: <T>(url: string) => axios.get<T>(url).then(responseBody),
 	post: <T>(url: string, body: {}) =>
 		axios.post<T>(url, body).then(responseBody),
+	del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
 const UserRequest = {
@@ -50,8 +51,11 @@ const TweetRequest = {
 	list: () => requests.get<Response<Tweet[]>>("/all"),
 	listTweetOfUser: (username: string) =>
 		requests.get<Response<Tweet[]>>(`/${username}`),
-	createTweet: (tweetObj: CreateTweet, username:string) =>
+	createTweet: (tweetObj: CreateTweet, username: string) =>
 		requests.post<Response<Tweet>>(`/${username}/add`, tweetObj),
+	details: (id: number) => requests.get<Response<Tweet>>(`/details/${id}`),
+	delete: (username: string, id: number) =>
+		requests.del<Response<boolean>>(`/${username}/delete/${id}`),
 };
 
 const agent = {
