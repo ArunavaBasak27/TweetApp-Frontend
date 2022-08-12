@@ -7,7 +7,6 @@ import RegisterForm from "../users/RegisterForm";
 
 const HomePage = () => {
 	const { modalStore, userStore } = useStore();
-	console.log(userStore.isLoggedIn);
 	return (
 		<Segment inverted textAlign="center" vertical className="masthead">
 			<Container text>

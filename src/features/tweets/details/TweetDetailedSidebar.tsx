@@ -2,14 +2,13 @@ import { Segment, List, Label, Item, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
-import { useEffect, useState } from "react";
 
 export default observer(function TweetDetailedSidebar() {
 	const { tweetStore, userStore } = useStore();
 
-	useEffect(() => {
-		if (tweetStore.userTweetLikeRegistry.size <= 1) tweetStore.loadLikeUsers();
-	}, [tweetStore.userTweetLikeRegistry.size]);
+	// useEffect(() => {
+	// 	if (tweetStore.userTweetLikeRegistry.size <= 1) tweetStore.loadLikeUsers();
+	// }, [tweetStore.userTweetLikeRegistry.size, tweetStore.loadLikeUsers]);
 
 	return (
 		<>
@@ -29,14 +28,14 @@ export default observer(function TweetDetailedSidebar() {
 					<Segment key={x.loginId} attached>
 						<List relaxed divided>
 							<Item style={{ position: "relative" }}>
-								{userStore.user?.email === x.email && (
+								{/* {userStore.user?.email === x.email && (
 									<Label
 										style={{ position: "absolute" }}
 										color="orange"
 										ribbon="right"
 										content="Host"
 									/>
-								)}
+								)} */}
 								<Image size="tiny" src={"/assets/user.png"} />
 								<Item.Content verticalAlign="middle">
 									<Item.Header as="h3">

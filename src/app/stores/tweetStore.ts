@@ -13,7 +13,7 @@ class TweetStore {
 	loading = false;
 	loadingInitial = true;
 	likeRegistry = new Map<string, number>();
-	userTweetLikeRegistry = new Map<User, number>();
+	userTweetLikeRegistry = new Map<number, User[]>();
 
 	constructor() {
 		makeAutoObservable(this);
@@ -56,8 +56,6 @@ class TweetStore {
 						).result;
 						this.likeRegistry.set(tweet.id.toString(), like);
 					});
-					console.log(this.likeRegistry);
-
 					this.loadingInitial = false;
 				} else {
 					this.loadingInitial = false;
@@ -181,7 +179,13 @@ class TweetStore {
 
 			runInAction(() => {
 				response.result.map((x) => {
-					this.userTweetLikeRegistry.set(x.user, x.tweetId);
+					if (this.userTweetLikeRegistry.has(x.tweetId)) {
+						this.userTweetLikeRegistry.get(x.tweetId)?.push(x.user);
+					} else {
+						var user1: User[] = [];
+						user1.push(x.user);
+						this.userTweetLikeRegistry.set(x.tweetId, user1);
+					}
 				});
 				console.log(this.userTweetLikeRegistry);
 			});
@@ -193,11 +197,37 @@ class TweetStore {
 	loadCurrentLikes = () => {
 		var users: User[] = [];
 
-		this.userTweetLikeRegistry.forEach((x, y) => {
-			if (x === this.selectedTweet?.id) users.push(y);
+		this.userTweetLikeRegistry.get(this.selectedTweet?.id!)?.map((x) => {
+			users.push(x);
 		});
 
 		return users;
+	};
+
+	postALike = async (id: number, user: User) => {
+		try {
+			var response = await agent.TweetRequest.postLike(id, user.email);
+			runInAction(() => {
+				if (response.isSuccess) {
+					if (response.result === 1) {
+						if (this.userTweetLikeRegistry.has(id)) {
+							this.userTweetLikeRegistry.get(id)?.push(user);
+						} else {
+							var users: User[] = [];
+							users.push(user);
+							this.userTweetLikeRegistry.set(id, users);
+						}
+					} else if (response.result === 2) {
+						var array = this.userTweetLikeRegistry.get(id);
+						var x = array?.filter((x) => x.loginId !== user.loginId);
+						this.userTweetLikeRegistry.set(id, x!);
+					}
+				}
+				console.log(this.userTweetLikeRegistry);
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 }
 export default TweetStore;

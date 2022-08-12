@@ -1,12 +1,30 @@
 import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
 import { Button, Header, Item, Segment, Image } from "semantic-ui-react";
+import { history } from "../../..";
 import { Tweet } from "../../../app/models/Tweet";
+import { useStore } from "../../../app/stores/store";
 
 interface Props {
 	tweet: Tweet;
 }
 
 export default observer(function TweetDetailedHeader({ tweet }: Props) {
+	const { tweetStore, userStore } = useStore();
+	const { postALike } = tweetStore;
+	const { user } = userStore;
+	const [like, setLike] = useState(true);
+
+	const handleLike = (id: number) => {
+		postALike(id, user!);
+		setLike(false);
+	};
+
+	useEffect(() => {
+		console.log("load");
+		if (tweetStore.userTweetLikeRegistry.size <= 1) tweetStore.loadLikeUsers();
+	}, [tweetStore.userTweetLikeRegistry.size, tweetStore.userTweetLikeRegistry.values.length, tweetStore.loadLikeUsers, tweetStore.loading]);
+
 	return (
 		<Segment.Group>
 			<Segment>
@@ -26,7 +44,7 @@ export default observer(function TweetDetailedHeader({ tweet }: Props) {
 				</Item.Group>
 			</Segment>
 			<Segment clearing attached="bottom">
-				<Button color="teal" icon="like" />
+				<Button color="teal" icon="like" onClick={() => handleLike(tweet.id)} />
 			</Segment>
 		</Segment.Group>
 	);

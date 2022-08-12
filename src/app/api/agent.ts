@@ -33,7 +33,7 @@ const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
 	get: <T>(url: string) => axios.get<T>(url).then(responseBody),
-	post: <T>(url: string, body: {}) =>
+	post: <T>(url: string, body?: {}) =>
 		axios.post<T>(url, body).then(responseBody),
 	put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
 	del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
@@ -62,6 +62,8 @@ const TweetRequest = {
 		requests.put<Response<Tweet>>(`/${username}/update/${id}`, body),
 	countLikes: (id: number) => requests.get<Response<number>>(`/like/${id}`),
 	likeDetails: () => requests.get<Response<Reactions[]>>(`/reactions`),
+	postLike: (id: number, username: string) =>
+		requests.post<Response<number>>(`/${username}/like/${id}`),
 };
 
 const agent = {
