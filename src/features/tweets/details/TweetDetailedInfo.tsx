@@ -31,12 +31,10 @@ export default observer(function TweetDetailedInfo({ tweet }: Props) {
 			<Segment attached>
 				<Grid verticalAlign="middle">
 					<Grid.Column width={1}>
-						<Icon name="at" size="large" color="teal" />
+						<Icon name="mail outline" size="large" color="teal" />
 					</Grid.Column>
 					<Grid.Column width={11}>
-						<span>
-							{tweet.user?.firstName} {tweet.user?.lastName}
-						</span>
+						<span>{tweet.user?.email}</span>
 					</Grid.Column>
 				</Grid>
 			</Segment>

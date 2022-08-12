@@ -13,14 +13,13 @@ export default observer(function TweetDetailedHeader({ tweet }: Props) {
 				<Item.Group>
 					<Item>
 						<Item.Content>
-							<Header
-								size="huge"
-								content={`#${tweet.tag}`}
-								// style={{ color: "white" }}
-							/>
+							<Header size="huge" content={`#${tweet.tag}`} />
 							<p>{tweet.datePosted}</p>
 							<p>
-								Hosted by <strong>{tweet.user?.email}</strong>
+								Hosted by{" "}
+								<strong>
+									{tweet.user?.firstName} {tweet.user?.lastName}
+								</strong>
 							</p>
 						</Item.Content>
 					</Item>

@@ -1,22 +1,15 @@
 import { Segment, List, Label, Item, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import agent from "../../../app/api/agent";
 import { useStore } from "../../../app/stores/store";
 import { useEffect, useState } from "react";
-import { Reactions } from "../../../app/models/Reactions";
 
 export default observer(function TweetDetailedSidebar() {
-	const { tweetStore } = useStore();
+	const { tweetStore, userStore } = useStore();
 
-	const [likedUsers, setLikedUsers] = useState<Reactions[]>([]);
 	useEffect(() => {
-		agent.TweetRequest.likeDetails().then((res) => {
-			setLikedUsers(
-				res.result.filter((x) => x.tweetId === tweetStore.selectedTweet?.id)
-			);
-		});
-	}, [likedUsers.length]);
+		if (tweetStore.userTweetLikeRegistry.size <= 1) tweetStore.loadLikeUsers();
+	}, [tweetStore.userTweetLikeRegistry.size]);
 
 	return (
 		<>
@@ -28,38 +21,40 @@ export default observer(function TweetDetailedSidebar() {
 				inverted
 				color="teal"
 			>
-				{likedUsers.length} people liked this tweet
+				{tweetStore.loadCurrentLikes().length} people liked this tweet
 			</Segment>
 
-			<Segment attached>
-				<List relaxed divided>
-					{likedUsers &&
-						likedUsers.map((x) => {
-							return (
-								<Item style={{ position: "relative" }}>
+			{tweetStore.loadCurrentLikes().map((x) => {
+				return (
+					<Segment key={x.loginId} attached>
+						<List relaxed divided>
+							<Item style={{ position: "relative" }}>
+								{userStore.user?.email === x.email && (
 									<Label
 										style={{ position: "absolute" }}
 										color="orange"
 										ribbon="right"
-									>
-										Host
-									</Label>
-									<Image size="tiny" src={"/assets/user.png"} />
-									<Item.Content verticalAlign="middle">
-										<Item.Header as="h3">
-											<Link to={`#`}>{x.user.firstName}</Link>
-										</Item.Header>
-										<Item.Extra style={{ color: "orange" }}>
-											<br />
-											<br />
-											{x.user.email}
-										</Item.Extra>
-									</Item.Content>
-								</Item>
-							);
-						})}
-				</List>
-			</Segment>
+										content="Host"
+									/>
+								)}
+								<Image size="tiny" src={"/assets/user.png"} />
+								<Item.Content verticalAlign="middle">
+									<Item.Header as="h3">
+										<Link to={`#`}>{x.firstName}</Link>
+									</Item.Header>
+									<Item.Extra style={{ color: "orange" }}>
+										<br />
+										<br />
+										{x.email}
+									</Item.Extra>
+								</Item.Content>
+							</Item>
+							{/* );
+						})} */}
+						</List>
+					</Segment>
+				);
+			})}
 		</>
 	);
 });

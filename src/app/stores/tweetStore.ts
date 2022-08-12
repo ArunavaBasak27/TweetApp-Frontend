@@ -13,6 +13,7 @@ class TweetStore {
 	loading = false;
 	loadingInitial = true;
 	likeRegistry = new Map<string, number>();
+	userTweetLikeRegistry = new Map<User, number>();
 
 	constructor() {
 		makeAutoObservable(this);
@@ -172,6 +173,31 @@ class TweetStore {
 
 	private getATweet = (id: number) => {
 		return this.tweetRegistry.get(id.toString());
+	};
+
+	loadLikeUsers = async () => {
+		try {
+			var response = await agent.TweetRequest.likeDetails();
+
+			runInAction(() => {
+				response.result.map((x) => {
+					this.userTweetLikeRegistry.set(x.user, x.tweetId);
+				});
+				console.log(this.userTweetLikeRegistry);
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	loadCurrentLikes = () => {
+		var users: User[] = [];
+
+		this.userTweetLikeRegistry.forEach((x, y) => {
+			if (x === this.selectedTweet?.id) users.push(y);
+		});
+
+		return users;
 	};
 }
 export default TweetStore;
