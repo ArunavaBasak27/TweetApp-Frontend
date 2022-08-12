@@ -8,11 +8,26 @@ import MyTweetsList from "./MyTweetsList";
 const ProfileDashboard = () => {
 	const { userStore, tweetStore } = useStore();
 	const { user } = userStore;
+	const {
+		loadAllTweets,
+		selectTweet,
+		tweetRegistry,
+		selectedTweet,
+		loadingInitial,
+	} = tweetStore;
 	useEffect(() => {
-		if (tweetStore.tweetRegistry.size <= 1) tweetStore.loadAllTweets();
-	}, [tweetStore.tweetRegistry.size, tweetStore.loadingInitial]);
-
-	if (tweetStore.loadingInitial)
+		if (tweetStore.tweetRegistry.size <= 1 || tweetStore.editMode)
+			tweetStore.loadAllTweets();
+	}, [
+		tweetRegistry.size,
+		tweetStore.editMode,
+		tweetStore.loading,
+		loadAllTweets,
+		loadingInitial,
+		selectedTweet,
+		selectTweet,
+	]);
+	if (tweetStore.loadingInitial || tweetStore.loading)
 		return <LoadingComponent content="Loading my tweets...." />;
 	return (
 		<Container>

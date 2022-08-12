@@ -11,7 +11,7 @@ class TweetStore {
 	editMode = false;
 	loading = false;
 	loadingInitial = true;
-
+	likeRegistry = new Map<string, number>();
 	constructor() {
 		makeAutoObservable(this);
 	}
@@ -25,7 +25,7 @@ class TweetStore {
 	get groupedTweets() {
 		return Object.entries(
 			this.tweetsByDate.reduce((tweets, tweet) => {
-				const user = tweet.user.email;
+				const user = tweet.user!.email;
 				tweets[user] = tweets[user] ? [...tweets[user], tweet] : [tweet];
 				return tweets;
 			}, {} as { [key: string]: Tweet[] })
@@ -37,7 +37,7 @@ class TweetStore {
 			.sort((a, b) => {
 				return Date.parse(b.datePosted) - Date.parse(a.datePosted);
 			})
-			.filter((x) => x.user.email === store.userStore.user?.email);
+			.filter((x) => x.user!.email === store.userStore.user?.email);
 	}
 
 	loadAllTweets = async () => {
@@ -46,10 +46,15 @@ class TweetStore {
 			runInAction(() => {
 				if (response.isSuccess) {
 					const tweetList = response.result;
-					tweetList.forEach((tweet) => {
-						//this.tweets.push(tweet);
+					tweetList.forEach(async (tweet) => {
 						this.tweetRegistry.set(tweet.id.toString(), tweet);
+						var like = await (
+							await agent.TweetRequest.countLikes(tweet.id)
+						).result;
+						this.likeRegistry.set(tweet.id.toString(), like);
 					});
+					console.log(this.likeRegistry);
+
 					this.loadingInitial = false;
 				} else {
 					this.loadingInitial = false;
@@ -62,13 +67,31 @@ class TweetStore {
 	};
 
 	createTweet = async (username: string, tweetObj: CreateTweet) => {
+		this.loading = true;
+		this.editMode = true;
 		try {
 			const response = await agent.TweetRequest.createTweet(tweetObj, username);
-			if (response.isSuccess) {
-				history.push("/my-profile");
-			}
+			runInAction(() => {
+				if (response.isSuccess) {
+					this.loading = false;
+					this.editMode = false;
+					console.log(response.result);
+					this.tweetRegistry.set(
+						response.result.id.toString(),
+						response.result
+					);
+					this.selectedTweet = response.result;
+					history.push("/my-profile");
+				}
+				this.loading = false;
+				this.editMode = false;
+			});
 		} catch (error) {
 			console.log(error);
+			runInAction(() => {
+				this.loading = false;
+				this.editMode = false;
+			});
 		}
 	};
 
@@ -76,6 +99,7 @@ class TweetStore {
 		let tweet: Tweet | undefined = this.getATweet(id);
 		if (tweet) {
 			this.selectedTweet = tweet;
+			return tweet;
 		} else {
 			this.loadingInitial = true;
 			try {
@@ -85,6 +109,7 @@ class TweetStore {
 						tweet = response.result;
 						this.loadingInitial = false;
 						this.selectedTweet = tweet;
+						return tweet;
 					}
 					console.log(tweet);
 				});
@@ -93,6 +118,7 @@ class TweetStore {
 				runInAction(() => {
 					this.loadingInitial = false;
 				});
+				return tweet;
 			}
 		}
 	};
@@ -102,13 +128,42 @@ class TweetStore {
 		try {
 			var response = await agent.TweetRequest.delete(username, id);
 			runInAction(() => {
-				this.tweetRegistry.delete(id.toString());
+				if (response.isSuccess) this.tweetRegistry.delete(id.toString());
 				this.loading = false;
 			});
 		} catch (error) {
 			runInAction(() => {
 				console.log(error);
 				this.loading = false;
+			});
+		}
+	};
+
+	updateTweet = async (username: string, id: number, tweetObj: CreateTweet) => {
+		this.loading = true;
+		this.editMode = true;
+		console.log(this.loading);
+		try {
+			var response = await agent.TweetRequest.update(username, id, tweetObj);
+			runInAction(() => {
+				if (response.isSuccess) {
+					this.loading = false;
+					this.editMode = false;
+					console.log(response.result);
+					this.tweetRegistry.set(
+						response.result.id.toString(),
+						response.result
+					);
+					this.selectedTweet = response.result;
+					history.push("/my-profile");
+				}
+				this.loading = false;
+				this.editMode = false;
+			});
+		} catch (error) {
+			runInAction(() => {
+				this.loading = false;
+				this.editMode = false;
 			});
 		}
 	};

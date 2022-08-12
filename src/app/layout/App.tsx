@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import HomePage from "../../features/home/HomePage";
 import TweetDetails from "../../features/tweets/details/TweetDetails";
@@ -16,7 +16,7 @@ import NavBar from "./NavBar";
 
 function App() {
 	const { commonStore, userStore } = useStore();
-
+	const location = useLocation();
 	useEffect(() => {
 		if (commonStore.token) {
 			userStore.getUser().finally(() => commonStore.setAppLoaded());
@@ -43,7 +43,11 @@ function App() {
 							<Route path="/details/:id" component={TweetDetails} />
 							<Route exact path="/allUsers" component={UsersDashboard} />
 							<Route exact path="/my-profile" component={ProfileDashboard} />
-							<Route exact path="/post-tweet" component={PostMyTweet} />
+							<Route
+								key={location.key}
+								path={["/post-tweet", "/update-tweet/:id"]}
+								component={PostMyTweet}
+							/>
 						</Container>
 					</>
 				)}

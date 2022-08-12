@@ -34,6 +34,7 @@ const requests = {
 	get: <T>(url: string) => axios.get<T>(url).then(responseBody),
 	post: <T>(url: string, body: {}) =>
 		axios.post<T>(url, body).then(responseBody),
+	put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
 	del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
@@ -56,6 +57,9 @@ const TweetRequest = {
 	details: (id: number) => requests.get<Response<Tweet>>(`/details/${id}`),
 	delete: (username: string, id: number) =>
 		requests.del<Response<boolean>>(`/${username}/delete/${id}`),
+	update: (username: string, id: number, body: {}) =>
+		requests.put<Response<Tweet>>(`/${username}/update/${id}`, body),
+	countLikes: (id: number) => requests.get<Response<number>>(`/like/${id}`),
 };
 
 const agent = {

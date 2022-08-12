@@ -1,11 +1,45 @@
-import React from 'react'
-
-const TweetDetailedInfo = () => {
-  return (
-    <div>
-      <h1>Info</h1>
-    </div>
-  )
+import { observer } from "mobx-react-lite";
+import { Segment, Grid, Icon } from "semantic-ui-react";
+import { Tweet } from "../../../app/models/Tweet";
+interface Props {
+	tweet: Tweet;
 }
 
-export default TweetDetailedInfo
+export default observer(function TweetDetailedInfo({ tweet }: Props) {
+	return (
+		<Segment.Group>
+			<Segment attached="top">
+				<Grid>
+					<Grid.Column width={1}>
+						<Icon size="large" color="teal" name="info" />
+					</Grid.Column>
+					<Grid.Column width={15}>
+						<p>{tweet.subject}</p>
+					</Grid.Column>
+				</Grid>
+			</Segment>
+			<Segment attached>
+				<Grid verticalAlign="middle">
+					<Grid.Column width={1}>
+						<Icon name="calendar" size="large" color="teal" />
+					</Grid.Column>
+					<Grid.Column width={15}>
+						<span>{tweet.datePosted}</span>
+					</Grid.Column>
+				</Grid>
+			</Segment>
+			<Segment attached>
+				<Grid verticalAlign="middle">
+					<Grid.Column width={1}>
+						<Icon name="at" size="large" color="teal" />
+					</Grid.Column>
+					<Grid.Column width={11}>
+						<span>
+							{tweet.user?.firstName} {tweet.user?.lastName}
+						</span>
+					</Grid.Column>
+				</Grid>
+			</Segment>
+		</Segment.Group>
+	);
+});

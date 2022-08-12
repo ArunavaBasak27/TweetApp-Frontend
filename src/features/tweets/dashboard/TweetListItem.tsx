@@ -4,8 +4,9 @@ import { Tweet } from "../../../app/models/Tweet";
 
 interface Props {
 	tweet: Tweet;
+	like: number;
 }
-const TweetListItem = ({ tweet }: Props) => {
+const TweetListItem = ({ tweet, like }: Props) => {
 	return (
 		<>
 			<Segment.Group>
@@ -22,7 +23,7 @@ const TweetListItem = ({ tweet }: Props) => {
 						<Item.Content>
 							<Item.Header># {tweet.tag}</Item.Header>
 							<Item.Description>
-								By @{tweet.user.firstName}.{tweet.user.lastName}
+								By @{tweet.user!.firstName}.{tweet.user!.lastName}
 							</Item.Description>
 						</Item.Content>
 					</Item.Group>
@@ -32,8 +33,7 @@ const TweetListItem = ({ tweet }: Props) => {
 						<Icon name="clock" />
 						{tweet.datePosted}
 						<br />
-						<Icon name="like" color="red" />
-						(5)
+						<Icon name="like" color="red" />({like})
 					</span>
 				</Segment>
 				<Segment clearing>
@@ -42,7 +42,7 @@ const TweetListItem = ({ tweet }: Props) => {
 						floated="right"
 						as={Link}
 						to={`/details/${tweet.id}`}
-						content="Details"
+						icon="info"
 						color="blue"
 					/>
 				</Segment>

@@ -8,7 +8,7 @@ class UserStore {
 	user: User | null = null;
 	loading: boolean = false;
 	loadingInitial: boolean = true;
-
+	firstTime: boolean = false;
 	constructor() {
 		makeAutoObservable(this);
 	}
@@ -45,7 +45,7 @@ class UserStore {
 				store.commonStore.setToken(response.token!);
 				runInAction(() => {
 					this.user = response.result;
-					console.log(this.user);
+					//console.log(this.user);
 				});
 				history.push("/tweets");
 				store.modalStore.closeModal();
@@ -59,9 +59,13 @@ class UserStore {
 
 	getUser = async () => {
 		try {
-			const response = await agent.UserRequest.current();
-			if (response.isSuccess) {
-				runInAction(() => (this.user = response.result));
+			if (this.firstTime || this.loadingInitial) {
+				const response = await agent.UserRequest.current();
+				if (response.isSuccess) {
+					runInAction(() => (this.user = response.result));
+				}
+			} else {
+				this.firstTime = true;
 			}
 		} catch (error) {
 			console.log(error);

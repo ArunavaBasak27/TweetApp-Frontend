@@ -25,8 +25,8 @@ const TweetDetails = () => {
 	return (
 		<Grid>
 			<Grid.Column width={10}>
-				<TweetDetailedHeader />
-				<TweetDetailedInfo />
+				<TweetDetailedHeader tweet={selectedTweet} />
+				<TweetDetailedInfo tweet={selectedTweet} />
 				<TweetDetailedChat />
 			</Grid.Column>
 			<Grid.Column width={6}>

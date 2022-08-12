@@ -18,7 +18,15 @@ const TweetsList = () => {
 						<Segment>
 							<Item.Group divided>
 								{tweets.map((tweet) => {
-									return <TweetListItem key={tweet.id} tweet={tweet} />;
+									return (
+										<TweetListItem
+											key={tweet.id}
+											tweet={tweet}
+											like={
+												tweetStore.likeRegistry.get(tweet.id.toString()) || 0
+											}
+										/>
+									);
 								})}
 							</Item.Group>
 						</Segment>

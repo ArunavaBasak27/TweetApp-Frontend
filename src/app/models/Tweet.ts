@@ -5,11 +5,12 @@ export interface Tweet {
 	subject: string;
 	tag?: string;
 	userId: number;
-	user: User;
+	user: User|null;
 	datePosted: string;
 }
 
 export interface CreateTweet {
+	id: number;
 	subject: string;
 	tag?: string;
 }

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
-import { Button, Header, Icon, Item, Segment } from "semantic-ui-react";
+import { Button, Header, Item, Segment } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 const MyTweetsList = () => {
@@ -26,12 +26,18 @@ const MyTweetsList = () => {
 									<Item.Header># {tweet?.tag}</Item.Header>
 									<Item.Description> {tweet?.subject}</Item.Description>
 									<Item.Extra>
-										<Button floated="right" content="Edit" color="blue" />
 										<Button
 											floated="right"
-											onClick={() => handleDelete(tweet.user.email, tweet.id)}
+											as={Link}
+											to={`/update-tweet/${tweet.id}`}
+											icon="edit"
+											color="blue"
+										/>
+										<Button
+											floated="right"
+											icon="trash"
+											onClick={() => handleDelete(tweet.user!.email, tweet.id)}
 											color="red"
-											content="Delete"
 										/>
 									</Item.Extra>
 								</Item.Content>
