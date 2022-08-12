@@ -4,9 +4,8 @@ import { Tweet } from "../../../app/models/Tweet";
 
 interface Props {
 	tweet: Tweet;
-	like: number;
 }
-const TweetListItem = ({ tweet, like }: Props) => {
+const TweetListItem = ({ tweet }: Props) => {
 	return (
 		<>
 			<Segment.Group>
@@ -32,8 +31,6 @@ const TweetListItem = ({ tweet, like }: Props) => {
 					<span>
 						<Icon name="clock" />
 						{tweet.datePosted}
-						<br />
-						<Icon name="like" color="red" />({like})
 					</span>
 				</Segment>
 				<Segment clearing>

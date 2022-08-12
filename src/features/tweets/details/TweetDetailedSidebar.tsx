@@ -6,10 +6,8 @@ import { useStore } from "../../../app/stores/store";
 export default observer(function TweetDetailedSidebar() {
 	const { tweetStore, userStore } = useStore();
 
-	// useEffect(() => {
-	// 	if (tweetStore.userTweetLikeRegistry.size <= 1) tweetStore.loadLikeUsers();
-	// }, [tweetStore.userTweetLikeRegistry.size, tweetStore.loadLikeUsers]);
-
+	const { selectedTweet } = tweetStore;
+	console.log(userStore.user?.email === selectedTweet?.user!.email);
 	return (
 		<>
 			<Segment
@@ -28,14 +26,14 @@ export default observer(function TweetDetailedSidebar() {
 					<Segment key={x.loginId} attached>
 						<List relaxed divided>
 							<Item style={{ position: "relative" }}>
-								{/* {userStore.user?.email === x.email && (
+								{x.email === selectedTweet?.user!.email && (
 									<Label
 										style={{ position: "absolute" }}
 										color="orange"
 										ribbon="right"
 										content="Host"
 									/>
-								)} */}
+								)}
 								<Image size="tiny" src={"/assets/user.png"} />
 								<Item.Content verticalAlign="middle">
 									<Item.Header as="h3">
