@@ -6,11 +6,15 @@ import { useStore } from "../../../app/stores/store";
 import UsersList from "./UsersList";
 
 const UsersDashboard = () => {
-	const { userStore } = useStore();
+	const { userStore, tweetStore } = useStore();
 	const { loadUsers, users } = userStore;
+	
+
 	useEffect(() => {
 		if (users.length <= 1) loadUsers();
 	}, [loadUsers, users.length]);
+
+
 	if (userStore.loadingInitial)
 		return <LoadingComponent content="Loading users" />;
 	return (

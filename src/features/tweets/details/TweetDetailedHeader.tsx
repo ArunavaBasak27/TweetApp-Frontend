@@ -7,7 +7,6 @@ interface Props {
 }
 
 export default observer(function TweetDetailedHeader({ tweet }: Props) {
-	console.log(tweet);
 	return (
 		<Segment.Group>
 			<Segment>

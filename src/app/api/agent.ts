@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { Reactions } from "../models/Reactions";
 import { Response } from "../models/Response";
 import { CreateTweet, Tweet } from "../models/Tweet";
 import { LoginUser, RegisterUser, User } from "../models/User";
@@ -60,6 +61,7 @@ const TweetRequest = {
 	update: (username: string, id: number, body: {}) =>
 		requests.put<Response<Tweet>>(`/${username}/update/${id}`, body),
 	countLikes: (id: number) => requests.get<Response<number>>(`/like/${id}`),
+	likeDetails: () => requests.get<Response<Reactions[]>>(`/reactions`),
 };
 
 const agent = {

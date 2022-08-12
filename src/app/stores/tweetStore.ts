@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { history } from "../..";
 import agent from "../api/agent";
 import { CreateTweet, Tweet } from "../models/Tweet";
+import { User } from "../models/User";
 import { store } from "./store";
 
 class TweetStore {
@@ -12,6 +13,7 @@ class TweetStore {
 	loading = false;
 	loadingInitial = true;
 	likeRegistry = new Map<string, number>();
+
 	constructor() {
 		makeAutoObservable(this);
 	}
