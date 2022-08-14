@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { Reactions } from "../models/Reactions";
+import { ReplyResponse } from "../models/ReplyResponse";
 import { Response } from "../models/Response";
 import { CreateTweet, Tweet } from "../models/Tweet";
 import { LoginUser, RegisterUser, User } from "../models/User";
@@ -64,6 +65,9 @@ const TweetRequest = {
 	likeDetails: () => requests.get<Response<Reactions[]>>(`/reactions`),
 	postLike: (id: number, username: string) =>
 		requests.post<Response<number>>(`/${username}/like/${id}`),
+	commentDetails: () => requests.get<Response<ReplyResponse[]>>("/replies"),
+	postComment: (id: number, username: string, message: any) =>
+		requests.post<Response<ReplyResponse>>(`${username}/reply/${id}`, message),
 };
 
 const agent = {

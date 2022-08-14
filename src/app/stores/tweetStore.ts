@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { history } from "../..";
 import agent from "../api/agent";
+import { ReplyResponse } from "../models/ReplyResponse";
 import { CreateTweet, Tweet } from "../models/Tweet";
 import { User } from "../models/User";
 import { store } from "./store";
@@ -14,6 +15,9 @@ class TweetStore {
 	loadingInitial = true;
 	likeRegistry = new Map<string, number>();
 	userTweetLikeRegistry = new Map<number, User[]>();
+	commentsRegistry = new Map<number, ReplyResponse[]>();
+	loadComment: boolean = true;
+	current: ReplyResponse[] = [];
 
 	constructor() {
 		makeAutoObservable(this);
@@ -194,6 +198,30 @@ class TweetStore {
 		}
 	};
 
+	loadComments = async () => {
+		try {
+			var response = await agent.TweetRequest.commentDetails();
+			runInAction(() => {
+				this.loadComment = false;
+				response.result.map((x) => {
+					if (this.commentsRegistry.has(x.tweetId)) {
+						this.commentsRegistry.get(x.tweetId)?.push(x);
+					} else {
+						var array: ReplyResponse[] = [];
+						array.push(x);
+						this.commentsRegistry.set(x.tweetId, array);
+					}
+				});
+				console.log(this.commentsRegistry);
+			});
+		} catch (error) {
+			console.log(error);
+			runInAction(() => {
+				this.loadComment = false;
+			});
+		}
+	};
+
 	loadCurrentLikes = () => {
 		var users: User[] = [];
 
@@ -202,6 +230,16 @@ class TweetStore {
 		});
 
 		return users;
+	};
+
+	loadCurrentComments = () => {
+		var comments: ReplyResponse[] = [];
+
+		this.commentsRegistry.get(this.selectedTweet?.id!)?.map((x) => {
+			comments.push(x);
+		});
+
+		return comments;
 	};
 
 	postALike = async (id: number, user: User) => {
@@ -224,6 +262,33 @@ class TweetStore {
 					}
 				}
 				console.log(this.userTweetLikeRegistry);
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	postAComment = async (message: any, user: User, id: number) => {
+		try {
+			var response = await agent.TweetRequest.postComment(
+				id,
+				user.email,
+				message
+			);
+			runInAction(() => {
+				if (response.isSuccess) {
+					var reply = response.result;
+					console.log(reply);
+					if (this.commentsRegistry.has(id)) {
+						this.commentsRegistry.get(id)?.push(reply);
+					} else {
+						var array: ReplyResponse[] = [];
+						array.push(reply);
+						this.commentsRegistry.set(id, array);
+					}
+					console.log(this.commentsRegistry);
+					console.log(this.commentsRegistry.values);
+				}
 			});
 		} catch (error) {
 			console.log(error);

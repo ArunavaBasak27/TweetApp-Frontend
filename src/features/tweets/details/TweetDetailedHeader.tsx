@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { Button, Header, Item, Segment, Image } from "semantic-ui-react";
-import { history } from "../../..";
 import { Tweet } from "../../../app/models/Tweet";
 import { useStore } from "../../../app/stores/store";
 
@@ -21,10 +20,14 @@ export default observer(function TweetDetailedHeader({ tweet }: Props) {
 	};
 
 	useEffect(() => {
-		console.log("load");
-		if (tweetStore.userTweetLikeRegistry.size <= 1) tweetStore.loadLikeUsers();
+		console.log("load TweetDetailedHeader");
+		if (tweetStore.userTweetLikeRegistry.size <= 1) {
+			console.log("loadlike");
+			tweetStore.loadLikeUsers();
+		}
 	}, [tweetStore.userTweetLikeRegistry.size, tweetStore.userTweetLikeRegistry.values.length, tweetStore.loadLikeUsers, tweetStore.loading]);
 
+	console.log("TweetDetailedHeader");
 	return (
 		<Segment.Group>
 			<Segment>

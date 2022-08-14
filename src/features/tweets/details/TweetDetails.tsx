@@ -5,7 +5,7 @@ import { Grid } from "semantic-ui-react";
 import agent from "../../../app/api/agent";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
-import TweetDetailedChat from "./TweetDetailedChat";
+import TweetDetailedChat from "./TweetDetailedChatList";
 import TweetDetailedHeader from "./TweetDetailedHeader";
 import TweetDetailedInfo from "./TweetDetailedInfo";
 import TweetDetailedSidebar from "./TweetDetailedSidebar";
