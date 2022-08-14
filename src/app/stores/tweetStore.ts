@@ -80,7 +80,6 @@ class TweetStore {
 				if (response.isSuccess) {
 					this.loading = false;
 					this.editMode = false;
-					console.log(response.result);
 					this.tweetRegistry.set(
 						response.result.id.toString(),
 						response.result
@@ -191,7 +190,6 @@ class TweetStore {
 						this.userTweetLikeRegistry.set(x.tweetId, user1);
 					}
 				});
-				console.log(this.userTweetLikeRegistry);
 			});
 		} catch (error) {
 			console.log(error);
@@ -212,7 +210,6 @@ class TweetStore {
 						this.commentsRegistry.set(x.tweetId, array);
 					}
 				});
-				console.log(this.commentsRegistry);
 			});
 		} catch (error) {
 			console.log(error);
@@ -261,7 +258,6 @@ class TweetStore {
 						this.userTweetLikeRegistry.set(id, x!);
 					}
 				}
-				console.log(this.userTweetLikeRegistry);
 			});
 		} catch (error) {
 			console.log(error);
@@ -278,7 +274,6 @@ class TweetStore {
 			runInAction(() => {
 				if (response.isSuccess) {
 					var reply = response.result;
-					console.log(reply);
 					if (this.commentsRegistry.has(id)) {
 						this.commentsRegistry.get(id)?.push(reply);
 					} else {
@@ -286,8 +281,6 @@ class TweetStore {
 						array.push(reply);
 						this.commentsRegistry.set(id, array);
 					}
-					console.log(this.commentsRegistry);
-					console.log(this.commentsRegistry.values);
 				}
 			});
 		} catch (error) {

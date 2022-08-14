@@ -8,7 +8,6 @@ import { useStore } from "../../../app/stores/store";
 
 const TweetDetailedChatForm = () => {
 	const { userStore, tweetStore } = useStore();
-	console.log("chatform");
 	const [state, setState] = useState(true);
 	useEffect(() => {
 		if (tweetStore.commentsRegistry.size <= 1 && tweetStore.loadComment) {

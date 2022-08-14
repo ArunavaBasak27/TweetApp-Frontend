@@ -20,14 +20,11 @@ export default observer(function TweetDetailedHeader({ tweet }: Props) {
 	};
 
 	useEffect(() => {
-		console.log("load TweetDetailedHeader");
 		if (tweetStore.userTweetLikeRegistry.size <= 1) {
-			console.log("loadlike");
 			tweetStore.loadLikeUsers();
 		}
 	}, [tweetStore.userTweetLikeRegistry.size, tweetStore.userTweetLikeRegistry.values.length, tweetStore.loadLikeUsers, tweetStore.loading]);
 
-	console.log("TweetDetailedHeader");
 	return (
 		<Segment.Group>
 			<Segment>

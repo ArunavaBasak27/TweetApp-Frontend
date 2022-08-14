@@ -9,8 +9,6 @@ export default observer(function TweetDetailedChatList() {
 	const { tweetStore } = useStore();
 	const { loadCurrentComments } = tweetStore;
 
-	console.log("chatlist");
-
 	return (
 		<>
 			<Segment

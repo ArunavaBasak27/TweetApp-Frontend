@@ -1,14 +1,11 @@
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
 import { Segment, Grid, Icon } from "semantic-ui-react";
 import { Tweet } from "../../../app/models/Tweet";
-import { useStore } from "../../../app/stores/store";
 interface Props {
 	tweet: Tweet;
 }
 
 export default observer(function TweetDetailedInfo({ tweet }: Props) {
-
 	return (
 		<Segment.Group>
 			<Segment attached="top">

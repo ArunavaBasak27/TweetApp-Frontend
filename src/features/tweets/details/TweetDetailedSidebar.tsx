@@ -7,7 +7,6 @@ export default observer(function TweetDetailedSidebar() {
 	const { tweetStore, userStore } = useStore();
 
 	const { selectedTweet } = tweetStore;
-	console.log(userStore.user?.email === selectedTweet?.user!.email);
 	return (
 		<>
 			<Segment
