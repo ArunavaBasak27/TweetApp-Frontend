@@ -15,7 +15,6 @@ const TweetsDashboard = () => {
 		tweetStore.loading,
 		tweetStore.loadAllTweets,
 		tweetStore.selectedTweet,
-		tweetStore.likeRegistry,
 	]);
 
 	if (tweetStore.loadingInitial || tweetStore.loading)

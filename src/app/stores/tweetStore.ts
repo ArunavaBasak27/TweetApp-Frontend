@@ -13,7 +13,6 @@ class TweetStore {
 	editMode = false;
 	loading = false;
 	loadingInitial = true;
-	likeRegistry = new Map<string, number>();
 	userTweetLikeRegistry = new Map<number, User[]>();
 	commentsRegistry = new Map<number, ReplyResponse[]>();
 	loadComment: boolean = true;
@@ -63,10 +62,6 @@ class TweetStore {
 					const tweetList = response.result;
 					tweetList.forEach(async (tweet) => {
 						this.tweetRegistry.set(tweet.id.toString(), tweet);
-						var like = await (
-							await agent.TweetRequest.countLikes(tweet.id)
-						).result;
-						this.likeRegistry.set(tweet.id.toString(), like);
 					});
 					this.loadingInitial = false;
 				} else {
@@ -161,7 +156,6 @@ class TweetStore {
 				if (response.isSuccess) {
 					this.loading = false;
 					this.editMode = false;
-					console.log(response.result);
 					this.tweetRegistry.set(
 						response.result.id.toString(),
 						response.result
