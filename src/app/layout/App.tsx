@@ -8,11 +8,11 @@ import TweetsDashboard from "../../features/tweets/dashboard/TweetsDashboard";
 import UsersDashboard from "../../features/users/list/UsersDashboard";
 import LoginForm from "../../features/users/LoginForm";
 import PostMyTweet from "../../features/users/profile/PostMyTweet";
-import ProfileDashboard from "../../features/users/profile/ProfileDashboard";
 import ModalContainer from "../common/modal/ModalContainer";
 import { useStore } from "../stores/store";
 import LoadingComponent from "./LoadingComponent";
 import NavBar from "./NavBar";
+import ProfilePage from "../../features/users/profile/ProfilePage";
 
 function App() {
 	const { commonStore, userStore } = useStore();
@@ -42,7 +42,7 @@ function App() {
 							<Route exact path="/tweets" component={TweetsDashboard} />
 							<Route path="/details/:id" component={TweetDetails} />
 							<Route exact path="/allUsers" component={UsersDashboard} />
-							<Route exact path="/my-profile" component={ProfileDashboard} />
+							<Route path="/profiles/:username" component={ProfilePage} />
 							<Route
 								key={location.key}
 								path={["/post-tweet", "/update-tweet/:id"]}

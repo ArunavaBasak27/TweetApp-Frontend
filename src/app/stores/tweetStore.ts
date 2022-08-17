@@ -47,6 +47,14 @@ class TweetStore {
 			.filter((x) => x.user!.email === store.userStore.user?.email);
 	}
 
+	givenUserTweets = (username: string) => {
+		return Array.from(this.tweetRegistry.values())
+			.sort((a, b) => {
+				return Date.parse(b.datePosted) - Date.parse(a.datePosted);
+			})
+			.filter((x) => x.user!.email === username);
+	};
+
 	loadAllTweets = async () => {
 		try {
 			const response = await agent.TweetRequest.list();
@@ -85,7 +93,7 @@ class TweetStore {
 						response.result
 					);
 					this.selectedTweet = response.result;
-					history.push("/my-profile");
+					history.push("/profiles/" + username);
 				}
 				this.loading = false;
 				this.editMode = false;
@@ -159,7 +167,7 @@ class TweetStore {
 						response.result
 					);
 					this.selectedTweet = response.result;
-					history.push("/my-profile");
+					history.push("/profiles/" + username);
 				}
 				this.loading = false;
 				this.editMode = false;

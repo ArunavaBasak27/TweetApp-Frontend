@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Item, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
+import UsersListItem from "./UsersListItem";
 
 const UsersList = () => {
 	const { userStore } = useStore();
@@ -10,19 +11,7 @@ const UsersList = () => {
 			<Item.Group divided>
 				{users &&
 					users.map((user) => {
-						return (
-							<Item key={user.loginId}>
-								<Item.Content>
-									<Item.Header>
-										{user.firstName} {user.lastName}
-									</Item.Header>
-									<Item.Meta>Username: {user.email}</Item.Meta>
-									<Item.Description>
-										Contact:+91{user.contactNumber}
-									</Item.Description>
-								</Item.Content>
-							</Item>
-						);
+						return <UsersListItem key={user.loginId} user={user} />;
 					})}
 			</Item.Group>
 		</Segment>

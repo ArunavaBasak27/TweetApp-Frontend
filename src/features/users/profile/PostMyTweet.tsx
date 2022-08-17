@@ -41,11 +41,11 @@ const PostMyTweet = () => {
 		if (tweet.id) {
 			tweetStore
 				.updateTweet(userStore.user?.email!, tweet.id, tweet)
-				.then(() => history.push("/my-profile"));
+				.then(() => history.push("/profiles/" + userStore.user?.email!));
 		} else {
 			tweetStore
 				.createTweet(userStore.user?.email!, tweet)
-				.then(() => history.push("/my-profile"));
+				.then(() => history.push("/profiles/" + userStore.user?.email!));
 		}
 	};
 

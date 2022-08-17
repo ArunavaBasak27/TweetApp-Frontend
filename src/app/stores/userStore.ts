@@ -98,6 +98,13 @@ class UserStore {
 			throw error;
 		}
 	};
+
+	getUserByUsername = async (username: string) => {
+		try {
+			var response = await agent.UserRequest.search(username);
+			console.log(response.result);
+		} catch (error) {}
+	};
 }
 
 export default UserStore;
