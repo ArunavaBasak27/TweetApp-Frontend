@@ -33,7 +33,12 @@ export default observer(function TweetDetailedSidebar() {
 										content="Host"
 									/>
 								)}
-								<Image size="tiny" src={"/assets/user.png"} />
+								<Image
+									size="tiny"
+									src={
+										x.photos.length == 0 ? "/assets/user.png" : x.photos[0].url
+									}
+								/>
 								<Item.Content verticalAlign="middle">
 									<Item.Header as="h3">
 										<Link to={`#`}>{x.firstName}</Link>

@@ -5,7 +5,8 @@ import { useStore } from "../stores/store";
 
 const NavBar = () => {
 	const { userStore } = useStore();
-	const { user, logout } = userStore;
+	const { user, logout, isLoggedIn } = userStore;
+
 	return (
 		<Menu inverted fixed="top">
 			<Container>
@@ -19,19 +20,20 @@ const NavBar = () => {
 				<Menu.Item position="right">
 					<Image
 						src={
-							user!.photos.filter((x) => x.isMain === true)[0].url ||
-							"/assets/user.png"
+							user?.photos.length === 0
+								? "/assets/user.png"
+								: user?.photos[0].url
 						}
 						avatar
 						spaced="right"
 					/>
-					{user && (
-						<Dropdown pointing="top left" text={user.email}>
+					{isLoggedIn && (
+						<Dropdown pointing="top left" text={user!.email}>
 							<Dropdown.Menu>
 								<Dropdown.Item
 									text="My Profile"
 									as={Link}
-									to={`/profiles/${user.email}`}
+									to={`/profiles/${user!.email}`}
 									icon="user"
 								/>
 								<Dropdown.Item onClick={logout} text="logout" icon="power" />

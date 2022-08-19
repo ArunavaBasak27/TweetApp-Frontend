@@ -16,7 +16,11 @@ const TweetListItem = ({ tweet }: Props) => {
 								floated="left"
 								size="tiny"
 								circular
-								src="/assets/user.png"
+								src={
+									tweet.user?.photos.length === 0
+										? "/assets/user.png"
+										: tweet.user?.photos[0].url
+								}
 							/>
 						</Item>
 						<Item.Content>

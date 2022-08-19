@@ -47,7 +47,6 @@ class UserStore {
 					this.user = response.result;
 					//console.log(this.user);
 				});
-				history.push("/tweets");
 				store.modalStore.closeModal();
 			} else {
 				throw new Error("invalid username or password");
@@ -105,10 +104,6 @@ class UserStore {
 			console.log(response.result);
 		} catch (error) {}
 	};
-
-	setImage=(image:string)=>{
-		this.user!.image=image;
-	}
 }
 
 export default UserStore;

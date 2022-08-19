@@ -7,6 +7,7 @@ import TweetListItem from "./TweetListItem";
 const TweetsList = () => {
 	const { tweetStore } = useStore();
 	const { groupedTweets } = tweetStore;
+
 	return (
 		<>
 			{groupedTweets.map(([group, tweets]) => {
@@ -30,11 +31,3 @@ const TweetsList = () => {
 };
 
 export default observer(TweetsList);
-/* <Segment>
-			<Item.Group divided>
-				{tweetsByDate.map((tweet) => {
-					return <TweetListItem key={tweet.id} tweet={tweet} />;
-				})}
-			</Item.Group>
-		</Segment>
- */

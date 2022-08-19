@@ -1,7 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
-import { Segment, Header, Comment, Form, Button } from "semantic-ui-react";
-import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { Segment, Header, Comment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import TweetDetailedChatForm from "./TweetDetailedChatForm";
 
@@ -25,7 +23,13 @@ export default observer(function TweetDetailedChatList() {
 					{loadCurrentComments().map((x) => {
 						return (
 							<Comment key={x.id}>
-								<Comment.Avatar src="/assets/user.png" />
+								<Comment.Avatar
+									src={
+										x.user.photos.length == 0
+											? "/assets/user.png"
+											: x.user.photos[0].url
+									}
+								/>
 								<Comment.Content>
 									<Comment.Author as="a">
 										{x.user.firstName!} {x.user.lastName!}

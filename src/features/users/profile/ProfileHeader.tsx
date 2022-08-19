@@ -18,8 +18,9 @@ const ProfileHeader = ({ profile }: Props) => {
 								avatar
 								size="small"
 								src={
-									profile.photos.filter((x) => x.isMain === true)[0].url ||
-									"/assets/user.png"
+									profile.photos.length === 0
+										? "/assets/user.png"
+										: profile.photos[0].url
 								}
 							/>
 							<Item.Content verticalAlign="middle">
