@@ -27,7 +27,7 @@ export default observer(function TweetDetailedChatList() {
 									src={
 										x.user.photos.length == 0
 											? "/assets/user.png"
-											: x.user.photos[0].url
+											: x.user.image
 									}
 								/>
 								<Comment.Content>

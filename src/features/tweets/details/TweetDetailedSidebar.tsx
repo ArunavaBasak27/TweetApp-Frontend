@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 
 export default observer(function TweetDetailedSidebar() {
-	const { tweetStore, userStore } = useStore();
+	const { tweetStore } = useStore();
 
 	const { selectedTweet } = tweetStore;
 	return (
@@ -35,9 +35,7 @@ export default observer(function TweetDetailedSidebar() {
 								)}
 								<Image
 									size="tiny"
-									src={
-										x.photos.length == 0 ? "/assets/user.png" : x.photos[0].url
-									}
+									src={x.photos.length == 0 ? "/assets/user.png" : x.image}
 								/>
 								<Item.Content verticalAlign="middle">
 									<Item.Header as="h3">

@@ -1,9 +1,8 @@
 import { Formik, Form } from "formik";
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "semantic-ui-react";
 import MyTextArea from "../../../app/common/form/MyTextArea";
-import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 
 const TweetDetailedChatForm = () => {

@@ -20,7 +20,7 @@ const ProfileHeader = ({ profile }: Props) => {
 								src={
 									profile.photos.length === 0
 										? "/assets/user.png"
-										: profile.photos[0].url
+										: profile.image
 								}
 							/>
 							<Item.Content verticalAlign="middle">

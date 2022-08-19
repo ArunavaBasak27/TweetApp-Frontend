@@ -19,11 +19,7 @@ const NavBar = () => {
 				<Menu.Item name="Post Tweet" as={NavLink} to="/post-tweet" />
 				<Menu.Item position="right">
 					<Image
-						src={
-							user?.photos.length === 0
-								? "/assets/user.png"
-								: user?.photos[0].url
-						}
+						src={user?.photos.length === 0 ? "/assets/user.png" : user?.image}
 						avatar
 						spaced="right"
 					/>
