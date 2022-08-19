@@ -3,7 +3,7 @@ import { Reactions } from "../models/Reactions";
 import { ReplyResponse } from "../models/ReplyResponse";
 import { Response } from "../models/Response";
 import { CreateTweet, Tweet } from "../models/Tweet";
-import { LoginUser, RegisterUser, User } from "../models/User";
+import { LoginUser, Photo, RegisterUser, User } from "../models/User";
 import { store } from "../stores/store";
 
 const sleep = (delay: number) => {
@@ -48,6 +48,13 @@ const UserRequest = {
 	search: (username: string) =>
 		requests.get<Response<User[]>>(`/search/${username}`),
 	current: () => requests.get<Response<User>>("/currentuser"),
+	uploadPhoto: (username: string, file: Blob) => {
+		let formData = new FormData();
+		formData.append("File", file);
+		return axios.post<Response<User>>(`user/${username}/photos`, formData, {
+			headers: { "Content-type": "multipart/form-data" },
+		});
+	},
 };
 
 const TweetRequest = {

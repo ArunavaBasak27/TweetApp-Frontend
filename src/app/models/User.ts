@@ -4,6 +4,8 @@ export interface User {
 	lastName: string;
 	email: string;
 	contactNumber: string;
+	photos: Photo[];
+	image: string;
 }
 
 export interface RegisterUser {
@@ -18,4 +20,11 @@ export interface RegisterUser {
 export interface LoginUser {
 	username: string;
 	password: string;
+}
+
+export interface Photo {
+	id: number;
+	isMain: boolean;
+	publicId: string;
+	url: string;
 }

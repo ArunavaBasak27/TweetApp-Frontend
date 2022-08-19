@@ -105,6 +105,10 @@ class UserStore {
 			console.log(response.result);
 		} catch (error) {}
 	};
+
+	setImage=(image:string)=>{
+		this.user!.image=image;
+	}
 }
 
 export default UserStore;

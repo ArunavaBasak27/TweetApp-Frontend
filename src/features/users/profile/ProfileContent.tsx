@@ -1,21 +1,23 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { Tab } from "semantic-ui-react";
+import { User } from "../../../app/models/User";
 import { useStore } from "../../../app/stores/store";
 import GetAllTweetsOfUser from "./GetAllTweetsOfUser";
+import ProfilePhotos from "./ProfilePhotos";
 interface Props {
-	username: string;
+	profile: User;
 }
-const ProfileContent = ({ username }: Props) => {
+const ProfileContent = ({ profile }: Props) => {
 	const panes = [
 		{ menuItem: "About", render: () => <Tab.Pane>About Content</Tab.Pane> },
-		{ menuItem: "Photos", render: () => <Tab.Pane>Photos Content</Tab.Pane> },
+		{ menuItem: "Photos", render: () => <ProfilePhotos profile={profile} /> },
 		{
 			menuItem: "Tweets",
-			render: () => <GetAllTweetsOfUser username={username} />,
+			render: () => <GetAllTweetsOfUser username={profile.email} />,
 		},
 	];
-	const { userStore, tweetStore } = useStore();
+	const { tweetStore } = useStore();
 	const {
 		loadAllTweets,
 		selectTweet,
@@ -34,7 +36,6 @@ const ProfileContent = ({ username }: Props) => {
 		loadingInitial,
 		selectedTweet,
 		selectTweet,
-		username,
 	]);
 	return (
 		<Tab

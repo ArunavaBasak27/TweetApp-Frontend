@@ -14,7 +14,14 @@ const ProfileHeader = ({ profile }: Props) => {
 				<Grid.Column width={12}>
 					<Item.Group>
 						<Item>
-							<Item.Image avatar size="small" src="/assets/user.png" />
+							<Item.Image
+								avatar
+								size="small"
+								src={
+									profile.photos.filter((x) => x.isMain === true)[0].url ||
+									"/assets/user.png"
+								}
+							/>
 							<Item.Content verticalAlign="middle">
 								<Header as="h1" content={`${profile.email}`} />
 							</Item.Content>

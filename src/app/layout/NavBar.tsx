@@ -17,7 +17,14 @@ const NavBar = () => {
 				<Menu.Item name="All Users" as={NavLink} to="/allusers" />
 				<Menu.Item name="Post Tweet" as={NavLink} to="/post-tweet" />
 				<Menu.Item position="right">
-					<Image src="/assets/user.png" avatar spaced="right" />
+					<Image
+						src={
+							user!.photos.filter((x) => x.isMain === true)[0].url ||
+							"/assets/user.png"
+						}
+						avatar
+						spaced="right"
+					/>
 					{user && (
 						<Dropdown pointing="top left" text={user.email}>
 							<Dropdown.Menu>
