@@ -9,6 +9,7 @@ class UserStore {
 	loading: boolean = false;
 	loadingInitial: boolean = true;
 	firstTime: boolean = false;
+	loggedOut: boolean = false;
 	constructor() {
 		makeAutoObservable(this);
 	}
@@ -46,6 +47,7 @@ class UserStore {
 				runInAction(() => {
 					this.user = response.result;
 					//console.log(this.user);
+					this.loggedOut = false;
 				});
 				store.modalStore.closeModal();
 			} else {
@@ -72,6 +74,7 @@ class UserStore {
 	};
 
 	logout = () => {
+		this.loggedOut = true;
 		store.commonStore.setToken(null);
 		window.localStorage.removeItem("jwt");
 		this.user = null;

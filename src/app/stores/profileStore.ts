@@ -47,6 +47,7 @@ export default class ProfileStore {
 					this.profile!.photos.push(element);
 					if (element.isMain) this.profile!.image = element.url;
 					console.log(this.profile);
+					this.uploading = false;
 				}
 			});
 		} catch (error) {

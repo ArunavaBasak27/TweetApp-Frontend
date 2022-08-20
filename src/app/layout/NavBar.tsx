@@ -1,11 +1,17 @@
 import { observer } from "mobx-react-lite";
-import { Link, NavLink } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { Container, Icon, Menu, Image, Dropdown } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 
 const NavBar = () => {
-	const { userStore } = useStore();
-	const { user, logout, isLoggedIn } = userStore;
+	const { userStore, profileStore } = useStore();
+	const { user, logout, isLoggedIn, getUser, loggedOut } = userStore;
+
+	useEffect(() => {
+		// console.log("nav");
+		getUser();
+	}, [user]);
 
 	return (
 		<Menu inverted fixed="top">

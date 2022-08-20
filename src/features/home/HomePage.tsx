@@ -7,6 +7,7 @@ import RegisterForm from "../users/RegisterForm";
 
 const HomePage = () => {
 	const { modalStore, userStore } = useStore();
+	console.log(userStore.isLoggedIn);
 	return (
 		<Segment inverted textAlign="center" vertical className="masthead">
 			<Container text>
@@ -14,7 +15,7 @@ const HomePage = () => {
 					<Icon name="twitter" size="massive" style={{ marginBottom: 12 }} />
 					TweetApp
 				</Header>
-				{userStore.isLoggedIn ? (
+				{userStore.isLoggedIn && !userStore.loggedOut ? (
 					<>
 						<Header as="h2" inverted content="Welcome to TweetApp" />
 						<Button as={Link} to="/tweets" size="huge" inverted>
