@@ -1,12 +1,13 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { User } from "../models/User";
+import { Photo, User } from "../models/User";
 import { store } from "./store";
 
 export default class ProfileStore {
 	profile: User | null = null;
 	loadingProfile = false;
 	uploading = false;
+	loading = false;
 	constructor() {
 		makeAutoObservable(this);
 	}
@@ -55,6 +56,30 @@ export default class ProfileStore {
 			runInAction(() => {
 				this.uploading = false;
 			});
+		}
+	};
+
+	setMainPhoto = async (photo: Photo) => {
+		this.loading = true;
+		try {
+			await agent.UserRequest.setMainPhoto(
+				store.userStore.user?.email!,
+				photo.id
+			);
+			store.userStore.setImage(photo.url);
+			runInAction(() => {
+				if (this.profile && this.profile.photos) {
+					this.profile.photos.find((p) => p.isMain)!.isMain = false;
+					this.profile.photos.find((p) => p.id === photo.id)!.isMain = true;
+					this.profile.image = photo.url;
+					this.loading = false;
+				}
+			});
+		} catch (error) {
+			runInAction(() => {
+				this.loading = false;
+			});
+			console.log(error);
 		}
 	};
 }

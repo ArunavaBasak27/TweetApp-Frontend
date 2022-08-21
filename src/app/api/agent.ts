@@ -55,6 +55,10 @@ const UserRequest = {
 			headers: { "Content-type": "multipart/form-data" },
 		});
 	},
+	setMainPhoto: (username: string, id: number) =>
+		requests.post(`user/${username}/photo/${id}/set-Main`),
+	deletePhoto: (username: string, id: number) =>
+		requests.del(`user/${username}/photo/${id}/delete`),
 };
 
 const TweetRequest = {

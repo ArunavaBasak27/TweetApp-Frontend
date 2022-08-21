@@ -9,7 +9,6 @@ const NavBar = () => {
 	const { user, logout, isLoggedIn, getUser, loggedOut } = userStore;
 
 	useEffect(() => {
-		// console.log("nav");
 		getUser();
 	}, [user]);
 
