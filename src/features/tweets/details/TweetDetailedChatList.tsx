@@ -1,10 +1,14 @@
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 import { Segment, Header, Comment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import TweetDetailedChatForm from "./TweetDetailedChatForm";
 
 export default observer(function TweetDetailedChatList() {
-	const { tweetStore } = useStore();
+	const {
+		tweetStore,
+		profileStore: { profile },
+	} = useStore();
 	const { loadCurrentComments } = tweetStore;
 
 	return (
@@ -23,13 +27,24 @@ export default observer(function TweetDetailedChatList() {
 					{loadCurrentComments().map((x) => {
 						return (
 							<Comment key={x.id}>
-								<Comment.Avatar
-									src={
-										x.user.photos.length == 0
-											? "/assets/user.png"
-											: x.user.image
-									}
-								/>
+								{x.user.email === profile?.email && (
+									<Comment.Avatar
+										src={
+											profile.photos.length == 0
+												? "/assets/user.png"
+												: profile.image
+										}
+									/>
+								)}
+								{x.user.email !== profile?.email && (
+									<Comment.Avatar
+										src={
+											x.user.photos!.length == 0
+												? "/assets/user.png"
+												: x.user.image
+										}
+									/>
+								)}
 								<Comment.Content>
 									<Comment.Author as="a">
 										{x.user.firstName!} {x.user.lastName!}
@@ -38,9 +53,6 @@ export default observer(function TweetDetailedChatList() {
 										<div>{x.datePosted!}</div>
 									</Comment.Metadata>
 									<Comment.Text>{x.message!}</Comment.Text>
-									<Comment.Actions>
-										<Comment.Action>Reply</Comment.Action>
-									</Comment.Actions>
 								</Comment.Content>
 							</Comment>
 						);

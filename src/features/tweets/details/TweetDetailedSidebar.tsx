@@ -4,9 +4,13 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 
 export default observer(function TweetDetailedSidebar() {
-	const { tweetStore } = useStore();
+	const {
+		tweetStore,
+		profileStore: { profile },
+	} = useStore();
 
 	const { selectedTweet } = tweetStore;
+	console.log(profile);
 	return (
 		<>
 			<Segment
@@ -33,10 +37,23 @@ export default observer(function TweetDetailedSidebar() {
 										content="Host"
 									/>
 								)}
-								<Image
-									size="tiny"
-									src={x.photos.length == 0 ? "/assets/user.png" : x.image}
-								/>
+								{x.email === profile?.email && (
+									<Image
+										size="tiny"
+										src={
+											profile.photos.length == 0
+												? "/assets/user.png"
+												: profile.image
+										}
+									/>
+								)}
+								{x.email !== profile?.email && (
+									<Image
+										size="tiny"
+										src={x.photos.length == 0 ? "/assets/user.png" : x.image}
+									/>
+								)}
+
 								<Item.Content verticalAlign="middle">
 									<Item.Header as="h3">
 										<Link to={`#`}>{x.firstName}</Link>

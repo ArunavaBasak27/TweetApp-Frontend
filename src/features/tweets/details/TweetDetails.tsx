@@ -10,15 +10,16 @@ import TweetDetailedInfo from "./TweetDetailedInfo";
 import TweetDetailedSidebar from "./TweetDetailedSidebar";
 
 const TweetDetails = () => {
-	const { tweetStore } = useStore();
-	const { selectedTweet, selectTweet, loadingInitial } = tweetStore;
+	const { tweetStore, profileStore } = useStore();
+	const { selectedTweet, selectTweet, loadingInitial, loadAllTweets } =
+		tweetStore;
 	const { id } = useParams<{ id: any }>();
 
 	useEffect(() => {
 		if (id) {
 			selectTweet(id);
 		}
-	}, [id, selectTweet]);
+	}, [id, selectTweet, profileStore.profile?.image]);
 
 	if (loadingInitial || !selectedTweet) return <LoadingComponent />;
 

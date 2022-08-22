@@ -19,7 +19,7 @@ const TweetListItem = ({ tweet }: Props) => {
 								src={
 									tweet.user?.photos.length === 0
 										? "/assets/user.png"
-										: tweet.user?.photos[0].url
+										: tweet.user?.image
 								}
 							/>
 						</Item>
