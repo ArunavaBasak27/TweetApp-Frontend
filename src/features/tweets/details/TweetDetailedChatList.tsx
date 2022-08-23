@@ -27,16 +27,15 @@ export default observer(function TweetDetailedChatList() {
 					{loadCurrentComments().map((x) => {
 						return (
 							<Comment key={x.id}>
-								{x.user.email === profile?.email && (
+								{x.user.email === profile?.email ? (
 									<Comment.Avatar
 										src={
-											profile.photos.length == 0
+											profile.photos.length === 0
 												? "/assets/user.png"
 												: profile.image
 										}
 									/>
-								)}
-								{x.user.email !== profile?.email && (
+								) : (
 									<Comment.Avatar
 										src={
 											x.user.photos!.length == 0

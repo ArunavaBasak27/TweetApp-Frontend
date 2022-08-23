@@ -19,7 +19,7 @@ const UsersDashboard = () => {
 		return <LoadingComponent content="Loading users" />;
 	return (
 		<Grid>
-			<Grid.Column width="10">
+			<Grid.Column width="16">
 				<List>
 					<UsersList />
 				</List>

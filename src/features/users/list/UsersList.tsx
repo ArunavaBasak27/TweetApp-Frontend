@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Item, Segment } from "semantic-ui-react";
+import { Grid, Item, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import UsersListItem from "./UsersListItem";
 
@@ -8,12 +8,12 @@ const UsersList = () => {
 	const { users } = userStore;
 	return (
 		<Segment>
-			<Item.Group divided>
+			<Grid container columns={3}>
 				{users &&
 					users.map((user) => {
 						return <UsersListItem key={user.loginId} user={user} />;
 					})}
-			</Item.Group>
+			</Grid>
 		</Segment>
 	);
 };

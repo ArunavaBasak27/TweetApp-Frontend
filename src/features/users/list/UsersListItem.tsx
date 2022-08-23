@@ -1,26 +1,45 @@
+import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
-import { Item } from "semantic-ui-react";
+import { Button, Card, Grid, Header, Icon, Image } from "semantic-ui-react";
 import { User } from "../../../app/models/User";
+import { useStore } from "../../../app/stores/store";
 
 interface Props {
 	user: User;
 }
 
 const UsersListItem = ({ user }: Props) => {
+	const { profileStore } = useStore();
+	const { profile } = profileStore;
 	return (
-		<Item>
-			<Item.Content>
-				<Item.Header>
-					{user.firstName} {user.lastName}
-				</Item.Header>
-				<Item.Meta>
-					Username:
-					<Link to={`/profiles/${user.email}`}>{user.email}</Link>
-				</Item.Meta>
-				<Item.Description>Contact:+91{user.contactNumber}</Item.Description>
-			</Item.Content>
-		</Item>
+		<>
+			<Grid.Column>
+				<Card>
+					<Card.Header>
+						{profile?.email === user.email ? (
+							<Image src={profile.image} />
+						) : (
+							<Image src={user.image} />
+						)}
+					</Card.Header>
+					<Card.Content>
+						<Card.Description textAlign="center">
+							<Header
+								sub
+								size="huge"
+								as="h1"
+								color="teal"
+								content={`${user.firstName} ${user.lastName}`}
+							/>
+						</Card.Description>
+					</Card.Content>
+					<Button color="yellow" as={Link} to={`/profiles/${user.email}`}>
+						Visit profile<Icon className="angle double right"></Icon>
+					</Button>
+				</Card>
+			</Grid.Column>
+		</>
 	);
 };
 
-export default UsersListItem;
+export default observer(UsersListItem);

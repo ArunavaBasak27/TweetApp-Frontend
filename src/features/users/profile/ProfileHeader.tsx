@@ -24,7 +24,10 @@ const ProfileHeader = ({ profile }: Props) => {
 								}
 							/>
 							<Item.Content verticalAlign="middle">
-								<Header as="h1" content={`${profile.email}`} />
+								<Header
+									as="h1"
+									content={`${profile.firstName.toUpperCase()} ${profile.lastName.toUpperCase()}`}
+								/>
 							</Item.Content>
 						</Item>
 					</Item.Group>
