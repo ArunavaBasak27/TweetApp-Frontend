@@ -2,8 +2,9 @@ import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { Button, Container, Header, Icon, Segment } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
-import LoginForm from "../users/LoginForm";
-import RegisterForm from "../users/RegisterForm";
+import ForgotPassword from "../users/entry/ForgotPassword";
+import LoginForm from "../users/entry/LoginForm";
+import RegisterForm from "../users/entry/RegisterForm";
 
 const HomePage = () => {
 	const { modalStore, userStore } = useStore();
@@ -39,6 +40,14 @@ const HomePage = () => {
 							inverted
 						>
 							Register!
+						</Button>
+						<Button
+							onClick={() => modalStore.openModal(<ForgotPassword />)}
+							to="/forgotpassword"
+							size="huge"
+							inverted
+						>
+							Reset Password
 						</Button>
 					</>
 				)}

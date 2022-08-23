@@ -1,8 +1,8 @@
 import { Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import { Button, Header } from "semantic-ui-react";
-import MyTextInput from "../../app/common/form/MyTextInput";
-import { useStore } from "../../app/stores/store";
+import MyTextInput from "../../../app/common/form/MyTextInput";
+import { useStore } from "../../../app/stores/store";
 import * as Yup from "yup";
 const RegisterForm = () => {
 	const { userStore } = useStore();

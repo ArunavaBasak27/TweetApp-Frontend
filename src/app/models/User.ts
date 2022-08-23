@@ -28,3 +28,7 @@ export interface Photo {
 	publicId: string;
 	url: string;
 }
+
+export interface Forgot {
+	password: string;
+}

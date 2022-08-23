@@ -3,7 +3,7 @@ import { Reactions } from "../models/Reactions";
 import { ReplyResponse } from "../models/ReplyResponse";
 import { Response } from "../models/Response";
 import { CreateTweet, Tweet } from "../models/Tweet";
-import { LoginUser, Photo, RegisterUser, User } from "../models/User";
+import { Forgot, LoginUser, Photo, RegisterUser, User } from "../models/User";
 import { store } from "../stores/store";
 
 const sleep = (delay: number) => {
@@ -59,6 +59,8 @@ const UserRequest = {
 		requests.post(`user/${username}/photo/${id}/set-Main`),
 	deletePhoto: (username: string, id: number) =>
 		requests.del(`user/${username}/photo/${id}/delete`),
+	forgotPassword: (username: string, forgot: Forgot) =>
+		requests.post(`${username}/forgot`, forgot),
 };
 
 const TweetRequest = {

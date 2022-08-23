@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { history } from "../..";
 import agent from "../api/agent";
-import { LoginUser, RegisterUser, User } from "../models/User";
+import { Forgot, LoginUser, RegisterUser, User } from "../models/User";
 import { store } from "./store";
 class UserStore {
 	users: User[] = [];
@@ -79,6 +79,20 @@ class UserStore {
 		window.localStorage.removeItem("jwt");
 		this.user = null;
 		history.push("/");
+	};
+
+	forgotPassword = async (credentials: LoginUser) => {
+		console.log(credentials);
+		try {
+			var forgot: Forgot = {
+				password: credentials.password,
+			};
+			await agent.UserRequest.forgotPassword(credentials.username, forgot);
+			store.modalStore.closeModal();
+			history.push("/");
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	register = async (credentials: RegisterUser) => {

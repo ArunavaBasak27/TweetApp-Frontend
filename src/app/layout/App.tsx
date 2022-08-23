@@ -6,13 +6,14 @@ import HomePage from "../../features/home/HomePage";
 import TweetDetails from "../../features/tweets/details/TweetDetails";
 import TweetsDashboard from "../../features/tweets/dashboard/TweetsDashboard";
 import UsersDashboard from "../../features/users/list/UsersDashboard";
-import LoginForm from "../../features/users/LoginForm";
+import LoginForm from "../../features/users/entry/LoginForm";
 import PostMyTweet from "../../features/users/profile/PostMyTweet";
 import ModalContainer from "../common/modal/ModalContainer";
 import { useStore } from "../stores/store";
 import LoadingComponent from "./LoadingComponent";
 import NavBar from "./NavBar";
 import ProfilePage from "../../features/users/profile/ProfilePage";
+import ForgotPassword from "../../features/users/entry/ForgotPassword";
 
 function App() {
 	const { commonStore, userStore } = useStore();
@@ -39,6 +40,7 @@ function App() {
 						<NavBar />
 						<Container style={{ marginTop: "7em" }}>
 							<Route exact path="/login" component={LoginForm} />
+							<Route exact path="/forgotPassword" component={ForgotPassword} />
 							<Route exact path="/tweets" component={TweetsDashboard} />
 							<Route path="/details/:id" component={TweetDetails} />
 							<Route exact path="/allUsers" component={UsersDashboard} />

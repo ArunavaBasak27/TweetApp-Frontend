@@ -1,27 +1,46 @@
+import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { Button, Icon, Item, Segment } from "semantic-ui-react";
 import { Tweet } from "../../../app/models/Tweet";
+import { useStore } from "../../../app/stores/store";
 
 interface Props {
 	tweet: Tweet;
 }
 const TweetListItem = ({ tweet }: Props) => {
+	const {
+		profileStore: { profile },
+	} = useStore();
+
 	return (
 		<>
 			<Segment.Group>
 				<Segment>
 					<Item.Group>
 						<Item>
-							<Item.Image
-								floated="left"
-								size="tiny"
-								circular
-								src={
-									tweet.user?.photos.length === 0
-										? "/assets/user.png"
-										: tweet.user?.image
-								}
-							/>
+							{tweet.user?.email === profile?.email ? (
+								<Item.Image
+									floated="left"
+									size="tiny"
+									circular
+									src={
+										profile?.photos.length === 0
+											? "/assets/user.png"
+											: profile?.image
+									}
+								/>
+							) : (
+								<Item.Image
+									floated="left"
+									size="tiny"
+									circular
+									src={
+										tweet.user?.photos.length === 0
+											? "/assets/user.png"
+											: tweet.user?.image
+									}
+								/>
+							)}
 						</Item>
 						<Item.Content>
 							<Item.Header># {tweet.tag}</Item.Header>
@@ -52,4 +71,4 @@ const TweetListItem = ({ tweet }: Props) => {
 	);
 };
 
-export default TweetListItem;
+export default observer(TweetListItem);
