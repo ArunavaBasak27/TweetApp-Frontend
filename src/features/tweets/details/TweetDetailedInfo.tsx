@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
 import { Segment, Grid, Icon } from "semantic-ui-react";
 import { Tweet } from "../../../app/models/Tweet";
@@ -24,7 +25,7 @@ export default observer(function TweetDetailedInfo({ tweet }: Props) {
 						<Icon name="calendar" size="large" color="teal" />
 					</Grid.Column>
 					<Grid.Column width={15}>
-						<span>{tweet.datePosted}</span>
+						<span>{format(Date.parse(tweet.datePosted), "dd MMM yyyy")}</span>
 					</Grid.Column>
 				</Grid>
 			</Segment>

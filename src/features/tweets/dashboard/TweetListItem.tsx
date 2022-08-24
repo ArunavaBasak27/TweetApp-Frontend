@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { Button, Icon, Item, Segment } from "semantic-ui-react";
@@ -53,7 +54,7 @@ const TweetListItem = ({ tweet }: Props) => {
 				<Segment>
 					<span>
 						<Icon name="clock" />
-						{tweet.datePosted}
+						{format(Date.parse(tweet.datePosted), "dd MMM yyyy hh:mm:aa")}
 					</span>
 				</Segment>
 				<Segment clearing>

@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
 import { Segment, Header, Comment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import TweetDetailedChatForm from "./TweetDetailedChatForm";
+import { formatDistanceToNow } from "date-fns";
 
 export default observer(function TweetDetailedChatList() {
 	const {
@@ -49,7 +49,9 @@ export default observer(function TweetDetailedChatList() {
 										{x.user.firstName!} {x.user.lastName!}
 									</Comment.Author>
 									<Comment.Metadata>
-										<div>{x.datePosted!}</div>
+										<div>
+											{formatDistanceToNow(Date.parse(x.datePosted!))} ago
+										</div>
 									</Comment.Metadata>
 									<Comment.Text>{x.message!}</Comment.Text>
 								</Comment.Content>
