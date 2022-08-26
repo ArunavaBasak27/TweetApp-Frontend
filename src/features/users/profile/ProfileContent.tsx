@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Tab } from "semantic-ui-react";
 import { User } from "../../../app/models/User";
 import { useStore } from "../../../app/stores/store";
+import AboutUser from "./AboutUser";
 import GetAllTweetsOfUser from "./GetAllTweetsOfUser";
 import ProfilePhotos from "./ProfilePhotos";
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 }
 const ProfileContent = ({ profile }: Props) => {
 	const panes = [
-		{ menuItem: "About", render: () => <Tab.Pane>About Content</Tab.Pane> },
+		{ menuItem: "About", render: () => <AboutUser /> },
 		{ menuItem: "Photos", render: () => <ProfilePhotos profile={profile} /> },
 		{
 			menuItem: "Tweets",

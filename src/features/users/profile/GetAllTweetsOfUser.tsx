@@ -20,7 +20,7 @@ const GetAllTweetsOfUser = ({ username }: Props) => {
 	return (
 		<>
 			<Segment>
-				<Header as="h2" content="All tweets:" />
+				<Header icon={"twitter square"} as="h2" content="All tweets:" />
 				<hr />
 				<Item.Group divided>
 					{givenUserTweets(username).map((tweet) => {
