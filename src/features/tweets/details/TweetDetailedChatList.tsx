@@ -10,7 +10,6 @@ export default observer(function TweetDetailedChatList() {
 		profileStore: { profile },
 	} = useStore();
 	const { loadCurrentComments } = tweetStore;
-	console.log(profile);
 	return (
 		<>
 			<Segment

@@ -13,11 +13,9 @@ export default observer(function TweetDetailedHeader({ tweet }: Props) {
 	const { tweetStore, userStore } = useStore();
 	const { postALike } = tweetStore;
 	const { user } = userStore;
-	const [like, setLike] = useState(true);
 
 	const handleLike = (id: number) => {
 		postALike(id, user!);
-		setLike(false);
 	};
 
 	useEffect(() => {

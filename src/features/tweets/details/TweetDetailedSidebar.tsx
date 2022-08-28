@@ -10,7 +10,6 @@ export default observer(function TweetDetailedSidebar() {
 	} = useStore();
 
 	const { selectedTweet } = tweetStore;
-	console.log(profile);
 	return (
 		<>
 			<Segment

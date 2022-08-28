@@ -7,7 +7,6 @@ import { useStore } from "../../../app/stores/store";
 
 const TweetDetailedChatForm = () => {
 	const { userStore, tweetStore } = useStore();
-	const [state, setState] = useState(true);
 	useEffect(() => {
 		if (tweetStore.commentsRegistry.size <= 1 && tweetStore.loadComment) {
 			tweetStore.loadComments();
@@ -41,7 +40,6 @@ const TweetDetailedChatForm = () => {
 						primary
 						floated="right"
 						type="submit"
-						onClick={() => setState((prev) => !prev)}
 					/>
 				</Form>
 			)}
