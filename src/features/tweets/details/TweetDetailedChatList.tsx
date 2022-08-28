@@ -10,7 +10,7 @@ export default observer(function TweetDetailedChatList() {
 		profileStore: { profile },
 	} = useStore();
 	const { loadCurrentComments } = tweetStore;
-
+	console.log(profile);
 	return (
 		<>
 			<Segment
@@ -38,7 +38,7 @@ export default observer(function TweetDetailedChatList() {
 								) : (
 									<Comment.Avatar
 										src={
-											x.user.photos!.length == 0
+											x.user.photos!.length === 0
 												? "/assets/user.png"
 												: x.user.image
 										}
