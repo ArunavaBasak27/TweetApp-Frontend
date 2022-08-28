@@ -18,7 +18,6 @@ const ProfilePage = () => {
 
 	if (loadingProfile) return <LoadingComponent />;
 
-	console.log(username, profile);
 	return (
 		<Grid>
 			<Grid.Column width={16}>

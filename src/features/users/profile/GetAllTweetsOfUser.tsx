@@ -15,7 +15,6 @@ const GetAllTweetsOfUser = ({ username }: Props) => {
 	};
 
 	if (loading) return <LoadingComponent />;
-	console.log(givenUserTweets(username), username);
 	return (
 		<>
 			<Segment>
