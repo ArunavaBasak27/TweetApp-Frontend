@@ -1,9 +1,9 @@
 import { Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
-import { CreateTweet, Tweet } from "../../../app/models/Tweet";
+import { CreateTweet } from "../../../app/models/Tweet";
 import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import * as Yup from "yup";
@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 
 const PostMyTweet = () => {
 	const { userStore, tweetStore } = useStore();
-	const { loading, selectTweet, selectedTweet } = tweetStore;
+	const { loading, selectTweet } = tweetStore;
 	const [tweet, setTweet] = useState<CreateTweet>({
 		id: 0,
 		tag: "",
@@ -57,7 +57,7 @@ const PostMyTweet = () => {
 				initialValues={tweet}
 				onSubmit={(values) => handleFormSubmit(values)}
 			>
-				{({ isValid, isSubmitting, dirty, handleSubmit }) => (
+				{({ isValid, isSubmitting, handleSubmit }) => (
 					<Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
 						<Header as="h2" content="Post tweet" color="teal" />
 						<MyTextInput name="tag" placeholder="Enter tag...." />

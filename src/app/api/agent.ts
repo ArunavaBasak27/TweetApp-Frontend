@@ -74,7 +74,6 @@ const TweetRequest = {
 		requests.del<Response<boolean>>(`/${username}/delete/${id}`),
 	update: (username: string, id: number, body: {}) =>
 		requests.put<Response<Tweet>>(`/${username}/update/${id}`, body),
-	countLikes: (id: number) => requests.get<Response<number>>(`/like/${id}`),
 	likeDetails: () => requests.get<Response<Reactions[]>>(`/reactions`),
 	postLike: (id: number, username: string) =>
 		requests.post<Response<number>>(`/${username}/like/${id}`),

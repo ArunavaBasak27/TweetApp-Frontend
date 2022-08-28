@@ -1,9 +1,8 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
-import { User } from "../../../app/models/User";
 import { useStore } from "../../../app/stores/store";
 import ProfileContent from "./ProfileContent";
 import ProfileHeader from "./ProfileHeader";
