@@ -29,7 +29,7 @@ const GetAllTweetsOfUser = ({ username }: Props) => {
 									<Item.Header># {tweet?.tag}</Item.Header>
 									<Item.Description> {tweet?.subject}</Item.Description>
 									<Item.Extra>
-										{tweet.user?.email == userStore.user?.email && (
+										{tweet.user?.email === userStore.user?.email && (
 											<>
 												<Button
 													floated="right"

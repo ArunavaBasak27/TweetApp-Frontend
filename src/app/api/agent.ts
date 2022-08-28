@@ -3,7 +3,7 @@ import { Reactions } from "../models/Reactions";
 import { ReplyResponse } from "../models/ReplyResponse";
 import { Response } from "../models/Response";
 import { CreateTweet, Tweet } from "../models/Tweet";
-import { Forgot, LoginUser, Photo, RegisterUser, User } from "../models/User";
+import { Forgot, LoginUser, RegisterUser, User } from "../models/User";
 import { store } from "../stores/store";
 
 const sleep = (delay: number) => {
